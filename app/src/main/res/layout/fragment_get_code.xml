@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".loading.login.ui.presentation.PhoneNumberFragment">
+
+
+    <ImageView
+        android:id="@+id/ivArrowBack"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="47dp"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFirstLineRegistration"
+        app:layout_constraintDimensionRatio="12:19"
+        app:layout_constraintEnd_toStartOf="@+id/ivFirstLineRegistration"
+        app:layout_constraintTop_toTopOf="@+id/ivFirstLineRegistration" />
+
+    <ImageView
+        android:id="@+id/ivFirstLineRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/short_line_blue"
+        app:layout_constraintDimensionRatio="60:6"
+        app:layout_constraintEnd_toStartOf="@+id/ivSecondLineRegistration"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivSecondLineRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/short_line_blue"
+        app:layout_constraintDimensionRatio="60:6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivThirdLineRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/text5"
+        app:layout_constraintDimensionRatio="60:6"
+        android:background="@drawable/short_line_blue"
+        android:layout_marginTop="37dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/ivSecondLineRegistration"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tvTitleConfirmYourNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/exo_medium"
+        android:gravity="center"
+        android:text="Confirm your number"
+        android:textColor="@color/text1"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSecondLineRegistration" />
+
+
+    <EditText
+        android:id="@+id/etCodeNumber1"
+        android:layout_width="72dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_shape_stroke"
+        android:gravity="center"
+        android:hint="5"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textColor="@color/text1"
+        android:textColorHint="@color/text4"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tvDiscriptionCode"
+        app:layout_constraintTop_toBottomOf="@+id/tvDiscriptionCode" />
+
+    <EditText
+        android:id="@+id/etCodeNumber2"
+        android:layout_width="72dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16.33dp"
+        android:background="@drawable/button_shape_stroke_gray"
+        android:gravity="center"
+        android:hint="5"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textColor="@color/text1"
+        android:textColorHint="@color/text4"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/etCodeNumber1"
+        app:layout_constraintTop_toTopOf="@+id/etCodeNumber1" />
+
+    <EditText
+        android:id="@+id/etCodeNumber3"
+        android:layout_width="72dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16.33dp"
+        android:background="@drawable/button_shape_stroke_gray"
+        android:gravity="center"
+        android:hint="5"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textColor="@color/text1"
+        android:textColorHint="@color/text4"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/etCodeNumber2"
+        app:layout_constraintTop_toTopOf="@+id/etCodeNumber1" />
+
+    <EditText
+        android:id="@+id/etCodeNumber4"
+        android:layout_width="72dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16.33dp"
+        android:background="@drawable/button_shape_stroke_gray"
+        android:gravity="center"
+        android:hint="5"
+        android:inputType="number"
+        android:maxLength="1"
+        android:textColor="@color/text1"
+        android:textColorHint="@color/text4"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@id/etCodeNumber3"
+        app:layout_constraintTop_toTopOf="@+id/etCodeNumber1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="337dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etCodeNumber4">
+
+        <TextView
+            android:id="@+id/tvDidntCode"
+            android:layout_width="205dp"
+            android:layout_height="21dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/exo_medium"
+            android:gravity="center_vertical"
+            android:text="Didn't receive the code?"
+            android:textColor="@color/text3"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvSendAgain"
+            android:layout_width="93dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="35dp"
+            android:fontFamily="@font/exo_medium"
+            android:gravity="center_vertical"
+            android:text="Send it again"
+            android:textColor="@color/primary"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/tvDiscriptionRegistrationCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/exo_medium"
+        android:gravity="center_horizontal"
+        android:layout_marginHorizontal="28dp"
+        android:text="Enter the code we sent to the number ending"
+        android:textColor="@color/text3"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleConfirmYourNumber" />
+
+    <TextView
+        android:id="@+id/tvDiscriptionCode"
+        android:layout_width="337dp"
+        android:layout_height="44dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/exo_medium"
+        android:gravity="center"
+        android:text="2842"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDiscriptionRegistrationCode" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSendCode"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:alpha="0.7"
+        android:enabled="false"
+        android:background="@drawable/button_shape_r12"
+        android:fontFamily="@font/exo_medium"
+        android:text="Continue"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="28dp"
+        android:visibility="visible"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

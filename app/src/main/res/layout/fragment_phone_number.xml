@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registrationPhoneFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".loading.login.ui.presentation.PhoneNumberFragment">
+
+
+    <ImageView
+        android:id="@+id/ivArrowBack1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@drawable/arrow_back"
+        android:layout_marginEnd="47dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFirstLineRegistration"
+        app:layout_constraintDimensionRatio="12:19"
+        app:layout_constraintEnd_toStartOf="@+id/ivFirstLineRegistration"
+        app:layout_constraintTop_toTopOf="@+id/ivFirstLineRegistration" />
+
+    <ImageView
+        android:id="@+id/ivFirstLineRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/short_line_blue"
+        app:layout_constraintDimensionRatio="60:6"
+        app:layout_constraintEnd_toStartOf="@+id/ivSecondLineRegistration"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivSecondLineRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/text5"
+        app:layout_constraintDimensionRatio="60:6"
+        android:background="@drawable/short_line_blue"
+        android:layout_marginTop="37dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ivThirdLineRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/text5"
+        app:layout_constraintDimensionRatio="60:6"
+        android:background="@drawable/short_line_blue"
+        android:layout_marginTop="37dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/ivSecondLineRegistration"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="28dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/exo_medium"
+        android:gravity="center"
+        android:text="Enter the phone number"
+        android:layout_marginTop="37dp"
+        android:textColor="@color/text1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSecondLineRegistration" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginHorizontal="28dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/exo_medium"
+        android:text="Enter your phone number and select the page code."
+        android:textColor="@color/text3"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="28dp"
+        android:layout_height="22dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/exo_medium"
+        android:text="Phone number"
+        android:textColor="@color/text1"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/etPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="28dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:inputType="phone"
+        android:hint="+380 995 059 742"
+        android:background="@drawable/button_shape_stroke"
+        android:textColor="@color/text1"
+        android:padding="16dp"
+        android:textColorHint="@color/text4"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber" />
+
+    <ProgressBar
+        android:id="@+id/pbLoading"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPhoneNumber" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSendCode"
+        android:layout_width="337dp"
+        android:alpha="0.7"
+        android:enabled="false"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_shape_r12"
+        android:fontFamily="@font/exo_medium"
+        android:text="Send me the code"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="visible"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

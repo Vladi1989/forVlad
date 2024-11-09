@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/onboarding_background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".loading.result.FinalRegistrationFragment">
+
+
+    <ImageView
+        android:id="@+id/ivArrowBack3"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="47dp"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintBottom_toBottomOf="@+id/ivFirstLineFinal"
+        app:layout_constraintDimensionRatio="12:19"
+        app:layout_constraintEnd_toStartOf="@+id/ivFirstLineFinal"
+        app:layout_constraintTop_toTopOf="@+id/ivFirstLineFinal" />
+
+    <ImageView
+        android:id="@+id/ivFirstLineFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/short_line_blue"
+        app:layout_constraintDimensionRatio="60:6"
+        app:layout_constraintEnd_toStartOf="@+id/ivSecondLineFinal"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivSecondLineFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/short_line_blue"
+        app:layout_constraintDimensionRatio="60:6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivThirdLineFinal"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:backgroundTint="@color/primary"
+        app:layout_constraintDimensionRatio="60:6"
+        android:background="@drawable/short_line_blue"
+        android:layout_marginTop="37dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/ivSecondLineFinal"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="134dp"
+        android:gravity="center_horizontal"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivSecondLineFinal">
+
+        <ImageView
+            android:layout_width="222dp"
+            android:layout_height="224dp"
+            android:background="@drawable/checkmark" />
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:layout_marginTop="24dp"
+            android:text="Welcome to OwlTech Delivery!"
+            android:textColor="@color/text1"
+            android:textSize="28dp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"/>
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/text2"
+            android:text="“Thanks for registering! Get ready to enjoy your favorite meals delivered straight to your door. Welcome aboard!”"
+            android:textSize="16dp"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFirstPageLetsGo"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="28dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_shape_r12"
+        android:fontFamily="@font/exo_medium"
+        android:text="Done!"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
