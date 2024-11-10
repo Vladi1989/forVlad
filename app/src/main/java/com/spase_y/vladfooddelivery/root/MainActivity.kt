@@ -6,13 +6,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.spase_y.vladfooddelivery.loading.main.LoadingFragment
 import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.loading.OnboardingViewModel
-import com.spase_y.vladfooddelivery.loading.main.MainBottomSheetFragment
+import com.spase_y.vladfooddelivery.loading.MainViewModel
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: OnboardingViewModel
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +25,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
 
         }
-        viewModel = ViewModelProvider(this).get(OnboardingViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         if (viewModel.isUserLoggedIn()){
             showMenu()
