@@ -22,6 +22,7 @@ import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
+import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 import org.koin.android.ext.android.inject
 import kotlin.collections.ArrayList
 
@@ -115,6 +116,11 @@ class MenuFragment : Fragment() {
                 }
             }
         }
+
+        binding.cvCart.setOnClickListener{
+            replaceFragment(CurrentOrderFragment())
+        }
+
         init()
         setTransformer()
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
@@ -127,6 +133,18 @@ class MenuFragment : Fragment() {
         })
         setUpMenuRecyclerViews()
     }
+
+
+
+    private fun replaceFragment(fragment: Fragment){
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fcvMainApp,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+
     private val runnable = Runnable{
         viewPager2.currentItem = viewPager2.currentItem + 1
     }
@@ -168,10 +186,6 @@ class MenuFragment : Fragment() {
         viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
     }
 
-
-
-
-
     private fun setUpMenuRecyclerViews() {
         recommendMenuAdapter = RecommendMenuAdapter(recommendItems)
         binding.rvRecommend.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -191,9 +205,6 @@ class MenuFragment : Fragment() {
         binding.rvMenu.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvMenu.adapter = menuAdapter
     }
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         handler.removeCallbacks(runnable)

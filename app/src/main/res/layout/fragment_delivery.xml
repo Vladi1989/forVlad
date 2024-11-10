@@ -273,7 +273,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_shape_r12"
             android:fontFamily="@font/exo_medium"
-            android:text="Go to delivery"
+            android:text="Go to payment"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"

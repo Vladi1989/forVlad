@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.main.discounts.DiscountsFragment
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
+import com.spase_y.vladfooddelivery.main.order.list_orders.ListOrdersFragment
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 
 
@@ -30,10 +32,13 @@ class MainAppFragment : Fragment() {
 
         setActiveNavIcon(R.id.ll_nav_home)
 
+        val cart = view.findViewById<CardView>(R.id.cvCart)
         val navHome = view.findViewById<LinearLayout>(R.id.ll_nav_home)
         val navDiscounts = view.findViewById<LinearLayout>(R.id.ll_nav_discounts)
         val navOrder = view.findViewById<LinearLayout>(R.id.ll_nav_order)
         val navAccount = view.findViewById<LinearLayout>(R.id.ll_nav_account)
+
+
 
         navHome.setOnClickListener{
             replaceFragment(MenuFragment())
@@ -44,7 +49,7 @@ class MainAppFragment : Fragment() {
             setActiveNavIcon(R.id.ll_nav_discounts)
         }
         navOrder.setOnClickListener {
-            replaceFragment(CurrentOrderFragment())
+            replaceFragment(ListOrdersFragment())
             setActiveNavIcon(R.id.ll_nav_order)
         }
         navAccount.setOnClickListener {
@@ -53,6 +58,8 @@ class MainAppFragment : Fragment() {
         }
 
     }
+
+
     private fun replaceFragment(fragment: Fragment){
         requireActivity().supportFragmentManager
             .beginTransaction()
@@ -60,6 +67,9 @@ class MainAppFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+
+
+
     private fun setActiveNavIcon(activeNavId: Int) {
         view?.findViewById<ImageView>(R.id.iv_icon_home)?.apply {
             setImageResource(R.drawable.buttom_nav_btn_1_negativ)

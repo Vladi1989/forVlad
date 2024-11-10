@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentCurrentOrderBinding
+import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.adapters.OrderAdapter
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.model.OrderScreenState
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.view_model.OrderViewModel
@@ -34,6 +36,15 @@ class CurrentOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnAddToCart.setOnClickListener {
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fcvMainApp, DeliveryFragment())
+                .addToBackStack(null)
+                .commit()
+        }
 
         binding.rvMyOrder.layoutManager = LinearLayoutManager(context)
         vm.loadOrder()
