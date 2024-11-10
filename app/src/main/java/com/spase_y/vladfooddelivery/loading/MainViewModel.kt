@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 
-class OnboardingViewModel(application: Application):AndroidViewModel(application) {
+class MainViewModel(application: Application):AndroidViewModel(application) {
     private val sharedPreferences = application.getSharedPreferences("user_preferences", Context.MODE_PRIVATE)
 
     fun isUserLoggedIn(): Boolean {
