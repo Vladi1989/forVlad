@@ -18,16 +18,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.main, LoadingFragment())
                 .commit()
 
         }
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        if (viewModel.isUserLoggedIn()){
+        if(viewModel.isUserLoggedIn()){
             showMenu()
         } else {
             showMainBottomSheetFragment()
@@ -35,14 +34,13 @@ class MainActivity : AppCompatActivity() {
     }
     private fun showMenu() {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main, MenuFragment())
+        transaction.replace(R.id.main,MenuFragment())
         transaction.addToBackStack(null)
         transaction.commit()
     }
-
-    private fun showMainBottomSheetFragment() {
+    private fun showMainBottomSheetFragment(){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.main, LoadingFragment())
+        transaction.replace(R.id.main,LoadingFragment())
         transaction.addToBackStack(null)
         transaction.commit()
     }
