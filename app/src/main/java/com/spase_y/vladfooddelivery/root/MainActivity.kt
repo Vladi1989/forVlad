@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
                 is MainScreenState.Loading -> {
                     val progressBar = findViewById<ProgressBar>(R.id.pbMain)
                     progressBar.visibility = View.VISIBLE
-                    showLoadingFragment()
                 }
                 is MainScreenState.Result -> {
                     val progressBar = findViewById<ProgressBar>(R.id.pbMain)
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                     if (state.isUserLoggedIn) {
                         showMenu()
                     } else {
-                        showMainBottomSheetFragment()
+                        showLoadingFragment()
                     }
                 }
                 else -> {}
@@ -60,13 +59,6 @@ class MainActivity : AppCompatActivity() {
     private fun showMenu() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main, MenuFragment())
-            .addToBackStack(null)
-            .commit()
-    }
-
-    private fun showMainBottomSheetFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main, MainBottomSheetFragment())
             .addToBackStack(null)
             .commit()
     }
