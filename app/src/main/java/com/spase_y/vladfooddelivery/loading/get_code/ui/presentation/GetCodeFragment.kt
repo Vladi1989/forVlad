@@ -36,8 +36,8 @@ class GetCodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val validCode = requireArguments().getString(GET_CODE_TAG)
-        val phoneNumber = requireArguments().getString("PHONE_NUMBER_TAG")?:""
+        validCode = requireArguments().getString(GET_CODE_TAG) ?: ""
+        phoneNumber = requireArguments().getString("PHONE_NUMBER_TAG") ?: ""
 
         if(validCode.isNullOrEmpty()){
             Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show()
