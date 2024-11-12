@@ -21,8 +21,6 @@ class SetUpProfileFragment : Fragment() {
     private val binding by lazy {
         FragmentSetUpProfileBinding.inflate(layoutInflater)
     }
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,8 +57,6 @@ class SetUpProfileFragment : Fragment() {
         binding.etFirstName.doOnTextChanged { text, start, before, count ->
             vm.isValidName(binding.etFirstName.text.toString())
         }
-
-
         binding.etPhoneNumberProfile.doOnTextChanged { text, start, before, count ->
             if(!text.toString().contains("+")){
                 binding.etPhoneNumberProfile.setText("+$text")
@@ -73,19 +69,15 @@ class SetUpProfileFragment : Fragment() {
             override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
                 vm.isAcceptPrivacy(isChecked)
             }
-
         })
-
         binding.ivArrowBack2.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-
         binding.btnActiveSendMeTheCodeProfile.setOnClickListener {
             openEnterCodeFragment()
         }
         setupObservers()
     }
-
     private fun setupObservers() {
         vm.screenStateLD.observe(viewLifecycleOwner){
             when(it){

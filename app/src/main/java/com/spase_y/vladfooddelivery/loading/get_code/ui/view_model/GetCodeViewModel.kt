@@ -1,22 +1,29 @@
 package com.spase_y.vladfooddelivery.loading.get_code.ui.view_model
 
+import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.spase_y.vladfooddelivery.loading.get_code.ui.model.GetCodeScreenState
 
-class GetCodeViewModel {
-    private var isValidCode = false
+class GetCodeViewModel(
+    private val sharedPreferences: SharedPreferences
+): ViewModel() {
 
-    val screenStateLD = MutableLiveData<GetCodeScreenState>()
+    private val _screenStateLD = MutableLiveData<GetCodeScreenState>()
+    val screenStateLd: LiveData<GetCodeScreenState> = _screenStateLD
 
-    fun isValidCode(number1: String, number2: String, number3: String, number4: String) {
-        isValidCode = (number1.isNotEmpty() && number2.isNotEmpty() && number3.isNotEmpty() && number4.isNotEmpty())
-        emit()
-    }
-    private fun emit(){
-        if (isValidCode){
-            screenStateLD.postValue(GetCodeScreenState.CanGoNext)
+    fun verifyCode(inputCode:String,correctCode: String, phoneNumber: String){
+        if(inputCode == correctCode){
+            savePhoneNumber(phoneNumber)
+            _screenStateLD.postValue(GetCodeScreenState.CanGoNext)
         } else {
-            screenStateLD.postValue(GetCodeScreenState.CantGoNext)
+            _screenStateLD.postValue(GetCodeScreenState.CantGoNext)
         }
+    }
+    private fun savePhoneNumber(phoneNumber: String){
+        sharedPreferences.edit()
+            .putString("PHONE_NUMBER_KEY", phoneNumber)
+            .apply()
     }
 }

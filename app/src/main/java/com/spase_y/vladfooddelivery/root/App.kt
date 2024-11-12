@@ -1,6 +1,7 @@
 package com.spase_y.vladfooddelivery.root
 
 import android.app.Application
+import com.spase_y.vladfooddelivery.loading.get_code.di.getCodeModule
 import com.spase_y.vladfooddelivery.main.order.order_main.di.getOrderModule
 import com.spase_y.vladfooddelivery.main.order.order_main.di.ordersModule
 import com.spase_y.vladfooddelivery.root.di.rootModule
@@ -15,7 +16,8 @@ class App:Application() {
             modules(
                 rootModule,
                 ordersModule,
-                getOrderModule
+                getOrderModule,
+                getCodeModule
             )
         }
     }
