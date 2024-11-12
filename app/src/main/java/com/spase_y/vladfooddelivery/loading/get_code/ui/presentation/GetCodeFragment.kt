@@ -24,7 +24,7 @@ class GetCodeFragment : Fragment() {
         FragmentGetCodeBinding.inflate(layoutInflater)
     }
     private val vm: GetCodeViewModel by viewModel()
-    private lateinit var validCode:String
+    private val validCode = "1234"
     private lateinit var phoneNumber:String
 
     override fun onCreateView(
@@ -36,7 +36,6 @@ class GetCodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        validCode = requireArguments().getString(GET_CODE_TAG) ?: ""
         phoneNumber = requireArguments().getString("PHONE_NUMBER_TAG") ?: ""
 
         if(validCode.isNullOrEmpty()){
@@ -103,7 +102,7 @@ class GetCodeFragment : Fragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if(!s.isNullOrEmpty()){
+                if (!s.isNullOrEmpty()) {
                     nextEditText?.requestFocus()
                 }
                 val code1 = binding.etCodeNumber1.text.toString()
@@ -111,7 +110,9 @@ class GetCodeFragment : Fragment() {
                 val code3 = binding.etCodeNumber3.text.toString()
                 val code4 = binding.etCodeNumber4.text.toString()
 
-                vm.verifyCode(code1 + code2 + code3 + code4, validCode, phoneNumber)
+                if (code1.isNotEmpty() && code2.isNotEmpty() && code3.isNotEmpty() && code4.isNotEmpty()) {
+                    vm.verifyCode(code1 + code2 + code3 + code4, validCode, phoneNumber)
+                }
             }
         }
     }
@@ -129,6 +130,7 @@ class GetCodeFragment : Fragment() {
                 is GetCodeScreenState.CanGoNext -> {
                     binding.btnSendCode.alpha = 1f
                     binding.btnSendCode.isEnabled = true
+                    Toast.makeText(requireContext(), "Код правильный!", Toast.LENGTH_SHORT).show()
                 }
                 is GetCodeScreenState.CantGoNext -> {
                     binding.btnSendCode.alpha = 0.7f
