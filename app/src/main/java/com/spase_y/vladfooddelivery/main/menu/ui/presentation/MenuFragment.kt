@@ -187,9 +187,22 @@ class MenuFragment : Fragment() {
     }
 
     private fun setUpMenuRecyclerViews() {
-        recommendMenuAdapter = RecommendMenuAdapter()
+        val recommendItemClickListener = object : RecommendMenuAdapter.OnItemClickListener{
+            override fun onItemClick(item: MenuItem) {
+                Toast.makeText(requireContext(),"${item.name} clicked", Toast.LENGTH_SHORT).show()
+            }
+        }
+        recommendMenuAdapter = RecommendMenuAdapter(
+            items = recommendItems,
+            listener = recommendItemClickListener,
+            onAddClick = { item ->
+                vm.addMenuItemToOrder(item)
+                Toast.makeText(requireContext(), "${item.name} added to cart", Toast.LENGTH_SHORT).show()
+            }
+        )
         binding.rvRecommend.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvRecommend.adapter = recommendMenuAdapter
+
         val itemClickListener = object : MenuAdapter.OnItemClickListener{
             override fun onItemClick(item: MenuItem) {
                 parentFragmentManager.beginTransaction()
