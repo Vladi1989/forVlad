@@ -15,11 +15,13 @@ class OrderAdapter(private val orderList: List<MenuItem>)
         inner class OrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             val productName: TextView = itemView.findViewById(R.id.textView7)
             val productImage: ImageView = itemView.findViewById(R.id.ivMyOrderImage)
+            val productPrice: TextView = itemView.findViewById(R.id.tvPrice)
 
 
             fun bind(item: MenuItem) {
                 productName.text = item.name
                 productImage.setImageResource(item.imageRes)
+                productPrice.text = "$${"%.2f".format(item.price)}"
             }
         }
 

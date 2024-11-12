@@ -30,36 +30,45 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
 
-        viewModel.getMainLd().observe(this) { state ->
-            when (state) {
-                is MainScreenState.Loading -> {
-                    val progressBar = findViewById<ProgressBar>(R.id.pbMain)
-                    progressBar.visibility = View.VISIBLE
-                }
-                is MainScreenState.Result -> {
-                    val progressBar = findViewById<ProgressBar>(R.id.pbMain)
-                    progressBar.visibility = View.INVISIBLE
-                    if (state.isUserLoggedIn) {
-                        showMenu()
-                    } else {
-                        showLoadingFragment()
-                    }
-                }
-                else -> {}
-            }
-        }
-    }
-
-    private fun showLoadingFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main, LoadingFragment())
-            .commit()
-    }
-
-    private fun showMenu() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main, MenuFragment())
-            .addToBackStack(null)
-            .commit()
+//        viewModel.getMainLd().observe(this) { state ->
+//            when (state) {
+//                is MainScreenState.Loading -> {
+//                    val progressBar = findViewById<ProgressBar>(R.id.pbMain)
+//                    progressBar.visibility = View.VISIBLE
+//                    showLoadingFragment()
+//                }
+//                is MainScreenState.Result -> {
+//                    val progressBar = findViewById<ProgressBar>(R.id.pbMain)
+//                    progressBar.visibility = View.INVISIBLE
+//                    if (state.isUserLoggedIn) {
+//                        showMenu()
+//                    } else {
+//                        showMainBottomSheetFragment()
+//                    }
+//                }
+//                else -> {}
+//            }
+//        }
+//    }
+//
+//    private fun showLoadingFragment() {
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.main, LoadingFragment())
+//            .commit()
+//    }
+//
+//    private fun showMenu() {
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.main, MenuFragment())
+//            .addToBackStack(null)
+//            .commit()
+//    }
+//
+//    private fun showMainBottomSheetFragment() {
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.main, MainBottomSheetFragment())
+//            .addToBackStack(null)
+//            .commit()
+//    }
     }
 }

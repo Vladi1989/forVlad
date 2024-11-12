@@ -64,6 +64,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <TextView
+            android:id="@+id/tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter"
