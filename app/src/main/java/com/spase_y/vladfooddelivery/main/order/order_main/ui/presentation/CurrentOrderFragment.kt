@@ -37,6 +37,10 @@ class CurrentOrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.ivArrowBack3.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
         binding.btnAddToCart.setOnClickListener {
             requireActivity()
                 .supportFragmentManager
