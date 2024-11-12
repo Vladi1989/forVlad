@@ -187,7 +187,7 @@ class MenuFragment : Fragment() {
     }
 
     private fun setUpMenuRecyclerViews() {
-        recommendMenuAdapter = RecommendMenuAdapter(recommendItems)
+        recommendMenuAdapter = RecommendMenuAdapter()
         binding.rvRecommend.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvRecommend.adapter = recommendMenuAdapter
         val itemClickListener = object : MenuAdapter.OnItemClickListener{

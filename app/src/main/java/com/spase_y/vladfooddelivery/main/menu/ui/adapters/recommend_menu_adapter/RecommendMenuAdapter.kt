@@ -6,21 +6,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.RecommendItemMenuBinding
 import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
+import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter.OnItemClickListener
 
 class RecommendMenuAdapter(
-    private val items: List<MenuItem>
+    private val items: List<MenuItem>,
+    private val listener: OnItemClickListener,
+    private val onAddClick: (MenuItem)-> Unit
+) : RecyclerView.Adapter<RecommendMenuAdapter.MenuViewHolder>() {
 
-) :
-    RecyclerView.Adapter<RecommendMenuAdapter.MenuViewHolder>() {
+    interface OnItemClickListener {
+        fun onItemClick(item:MenuItem)
+    }
 
-
-
-    class MenuViewHolder(val binding: RecommendItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MenuViewHolder(val binding: RecommendItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: MenuItem) {
             binding.imageView7.setImageResource(item.imageRes)
             binding.productName.text = item.name
             binding.productTitle.text = item.description
             binding.productPrice.text = "$ ${item.price}"
+            binding.btnAddRecommend.setOnClickListener {
+                onAddClick.invoke(item)
+            }
+            binding.root.setOnClickListener{
+                listener.onItemClick(item)
+            }
         }
     }
 
