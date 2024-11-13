@@ -46,4 +46,5 @@ class MainViewModel(
     companion object {
         private var userNumber = ""
     }
+
 }
