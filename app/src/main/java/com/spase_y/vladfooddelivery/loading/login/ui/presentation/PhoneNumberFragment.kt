@@ -1,6 +1,7 @@
 package com.spase_y.vladfooddelivery.loading.login.ui.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import com.spase_y.vladfooddelivery.databinding.FragmentPhoneNumberBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.presentation.GetCodeFragment
 import com.spase_y.vladfooddelivery.loading.login.ui.model.PhoneNumberScreenState
 import com.spase_y.vladfooddelivery.loading.login.ui.view_model.PhoneNumberViewModel
+import com.spase_y.vladfooddelivery.root.MainActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class PhoneNumberFragment : Fragment() {
@@ -43,6 +46,8 @@ class PhoneNumberFragment : Fragment() {
         }
 
         binding.btnSendCode.setOnClickListener {
+            val number = binding.etPhoneNumber.text.toString()
+            (requireActivity() as MainActivity).viewModel.setNumber(number)
             vm.getCode(binding.etPhoneNumber.text.toString())
 
         }
@@ -55,24 +60,31 @@ class PhoneNumberFragment : Fragment() {
                 is PhoneNumberScreenState.CanGoNext -> {
                     binding.btnSendCode.alpha = 1f
                     binding.btnSendCode.isEnabled = true
+                    Log.d("TAG1","CanGoNext")
                 }
                 is PhoneNumberScreenState.CantGoNext -> {
                     binding.btnSendCode.alpha = 0.7f
                     binding.btnSendCode.isEnabled = false
+                    Log.d("TAG1","CantGoNext")
                 }
                 is PhoneNumberScreenState.Loading -> {
                     binding.btnSendCode.alpha = 0.7f
                     binding.btnSendCode.isEnabled = false
                     binding.pbLoading.visibility = View.VISIBLE
+                    Log.d("TAG1","Loading")
                 }
                 is PhoneNumberScreenState.Error -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
                     binding.btnSendCode.alpha = 1f
                     binding.btnSendCode.isEnabled = true
+                    Log.d("TAG1","Error")
+
 
                 }
                 is PhoneNumberScreenState.Result -> {
+                    Log.d("TAG1","Result")
+
                     binding.pbLoading.visibility = View.GONE
                     openEnterCodeFragment(it.result)
                 }

@@ -32,15 +32,18 @@ class MainViewModel(
 
 
     fun isUserLoggedIn(): Boolean {
-        val email = sharedPreferences.getString("user_email", null)
-        return !email.isNullOrEmpty()
+        val number = sharedPreferences.getString("user_number", null)
+        return !number.isNullOrEmpty()
     }
 
-    fun saveUserEmail(email: String) {
-        sharedPreferences.edit().putString("user_email", email).apply()
+    fun saveUserNumber() {
+        sharedPreferences.edit().putString("user_number", userNumber).apply()
+    }
+    fun setNumber(value: String){
+        userNumber = value
     }
 
-    fun clearUserData() {
-        sharedPreferences.edit().remove("user_email").apply()
+    companion object {
+        private var userNumber = ""
     }
 }

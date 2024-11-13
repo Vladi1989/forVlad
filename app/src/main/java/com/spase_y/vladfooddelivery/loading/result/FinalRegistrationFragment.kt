@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentFinalRegistrationBinding
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
+import com.spase_y.vladfooddelivery.root.MainActivity
 
 
 class FinalRegistrationFragment : Fragment() {
@@ -31,6 +32,7 @@ class FinalRegistrationFragment : Fragment() {
         binding.btnFirstPageLetsGo.setOnClickListener {
             openApp()
         }
+        (requireActivity() as MainActivity).viewModel.saveUserNumber()
     }
     fun openApp(){
         requireActivity()

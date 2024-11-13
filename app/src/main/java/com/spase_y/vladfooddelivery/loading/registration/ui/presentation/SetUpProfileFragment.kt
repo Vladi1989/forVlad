@@ -14,6 +14,7 @@ import com.spase_y.vladfooddelivery.databinding.FragmentSetUpProfileBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.presentation.GetCodeFragment
 import com.spase_y.vladfooddelivery.loading.registration.ui.model.SetupProfileScreenState
 import com.spase_y.vladfooddelivery.loading.registration.ui.view_model.SetupProfileViewModel
+import com.spase_y.vladfooddelivery.root.MainActivity
 
 
 class SetUpProfileFragment : Fragment() {
@@ -97,6 +98,8 @@ class SetUpProfileFragment : Fragment() {
     }
 
     fun openEnterCodeFragment(){
+        val number = binding.etPhoneNumberProfile.text.toString()
+        (requireActivity() as MainActivity).viewModel.setNumber(number)
         parentFragmentManager.beginTransaction()
             .replace(R.id.main, GetCodeFragment())
             .addToBackStack(null)

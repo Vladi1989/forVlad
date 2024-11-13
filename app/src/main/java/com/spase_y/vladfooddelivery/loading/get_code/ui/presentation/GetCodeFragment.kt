@@ -24,7 +24,8 @@ class GetCodeFragment : Fragment() {
         FragmentGetCodeBinding.inflate(layoutInflater)
     }
     private val vm: GetCodeViewModel by viewModel()
-    private val validCode = "1234"
+
+    private lateinit var validCode:String
     private lateinit var phoneNumber:String
 
     override fun onCreateView(
@@ -37,6 +38,7 @@ class GetCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         phoneNumber = requireArguments().getString("PHONE_NUMBER_TAG") ?: ""
+        validCode = requireArguments().getString(GET_CODE_TAG) ?: ""
 
         if(validCode.isNullOrEmpty()){
             Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show()
