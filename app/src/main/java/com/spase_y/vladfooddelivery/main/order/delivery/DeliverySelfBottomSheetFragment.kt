@@ -8,13 +8,15 @@ import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 
 
-class DeliveryCardBottomSheetFragment : Fragment() {
+class DeliverySelfBottomSheetFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_delivery_card_payment_bottom_sheet, container, false)
+        return inflater.inflate(R.layout.fragment_delivery_self_bottom_sheet, container, false)
     }
+
+
 }

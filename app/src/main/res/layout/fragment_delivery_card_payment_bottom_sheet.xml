@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="224dp"
-    tools:context=".main.order.delivery.DeliveryBottomSheetFragment">
+    tools:context=".main.order.delivery.DeliveryCardBottomSheetFragment">
 
     <ImageView
         android:id="@+id/imageView2"
