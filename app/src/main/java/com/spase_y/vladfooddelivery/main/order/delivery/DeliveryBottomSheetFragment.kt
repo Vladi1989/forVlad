@@ -15,6 +15,6 @@ class DeliveryBottomSheetFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_delivery_bottom_sheet, container, false)
+        return inflater.inflate(R.layout.fragment_delivery_card_payment_bottom_sheet, container, false)
     }
 }
