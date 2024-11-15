@@ -21,6 +21,25 @@ class AccountFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.cvHelpOff.setOnClickListener {
+            binding.cvHelpOff.visibility = View.GONE
+            binding.cvHelpOn.visibility = View.VISIBLE
+        }
+        binding.cvHelpOn.setOnClickListener {
+            binding.cvHelpOff.visibility = View.VISIBLE
+            binding.cvHelpOn.visibility = View.GONE
+        }
+        binding.cvLanguageOff.setOnClickListener {
+            binding.cvLanguageOff.visibility = View.GONE
+            binding.cvLanguageOn.visibility = View.VISIBLE
+        }
+        binding.cvLanguageOn.setOnClickListener {
+            binding.cvLanguageOff.visibility = View.VISIBLE
+            binding.cvLanguageOn.visibility = View.GONE
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
