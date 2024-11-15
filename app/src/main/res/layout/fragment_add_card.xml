@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.order.add_card.AddCardFragment">
+    tools:context=".main.add_card.add_card.AddCardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clMyOrder"
@@ -43,7 +42,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="440dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
 
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +51,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="460dp"
             android:layout_marginHorizontal="28dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +69,7 @@
         android:layout_marginHorizontal="28dp"
         android:background="@drawable/button_shape_r12"
         android:fontFamily="@font/exo_medium"
-        android:text="Go to delivery"
+        android:text="Add New Card"
         android:textAllCaps="false"
         android:alpha="0.7"
         android:enabled="false"

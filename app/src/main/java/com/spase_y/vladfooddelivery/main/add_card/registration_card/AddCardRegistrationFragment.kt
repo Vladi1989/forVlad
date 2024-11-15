@@ -1,4 +1,4 @@
-package com.spase_y.vladfooddelivery.main.order.add_card
+package com.spase_y.vladfooddelivery.main.add_card.registration_card
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.databinding.FragmentAddCardBinding
+import com.spase_y.vladfooddelivery.databinding.FragmentAddCardRegistrationBinding
 
 
-class AddCardFragment : Fragment() {
-    private var _binding: FragmentAddCardBinding? = null
+class AddCardRegistrationFragment : Fragment() {
+    private var _binding: FragmentAddCardRegistrationBinding? = null
     private val binding get() = _binding!!
 
 
@@ -18,7 +18,7 @@ class AddCardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddCardBinding.inflate(inflater,container,false)
+        _binding = FragmentAddCardRegistrationBinding.inflate(inflater,container,false)
         return binding.root
     }
 
@@ -26,6 +26,4 @@ class AddCardFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
