@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.spase_y.vladfooddelivery.R
+import com.spase_y.vladfooddelivery.main.account.AccountFragment
 import com.spase_y.vladfooddelivery.main.discounts.DiscountsFragment
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
 import com.spase_y.vladfooddelivery.main.order.list_orders.ListOrdersFragment
@@ -39,7 +40,6 @@ class MainAppFragment : Fragment() {
         val navAccount = view.findViewById<LinearLayout>(R.id.ll_nav_account)
 
 
-
         navHome.setOnClickListener{
             replaceFragment(MenuFragment())
             setActiveNavIcon(R.id.ll_nav_home)
@@ -53,7 +53,7 @@ class MainAppFragment : Fragment() {
             setActiveNavIcon(R.id.ll_nav_order)
         }
         navAccount.setOnClickListener {
-            replaceFragment(DiscountsFragment())
+            replaceFragment(AccountFragment())
             setActiveNavIcon(R.id.ll_nav_account)
         }
 

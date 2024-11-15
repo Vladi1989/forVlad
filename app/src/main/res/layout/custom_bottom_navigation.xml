@@ -1,130 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="12dp">
 
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="horizontal"
-android:padding="8dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="8dp">
 
-<LinearLayout
-    android:id="@+id/ll_nav_home"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="8dp"
-    android:clickable="true"
-    android:focusable="true">
+        <LinearLayout
+            android:id="@+id/ll_nav_home"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/iv_icon_home"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/buttom_nav_btn_1_negativ"/>
+            <ImageView
+                android:id="@+id/iv_icon_home"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/buttom_nav_btn_1_negativ" />
 
-    <TextView
-        android:id="@+id/tv_text_home"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        android:fontFamily="@font/exo_medium"
-        android:textColor="@color/text4"
-        android:textSize="12sp"/>
+            <TextView
+                android:id="@+id/tv_text_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/exo_medium"
+                android:text="Home"
+                android:textColor="@color/text4"
+                android:textSize="12sp" />
 
-</LinearLayout>
+        </LinearLayout>
 
-<LinearLayout
-    android:id="@+id/ll_nav_discounts"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="8dp"
-    android:clickable="true"
-    android:focusable="true">
+        <LinearLayout
+            android:id="@+id/ll_nav_discounts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/iv_icon_discounts"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/buttom_nav_btn_2_negativ"/>
+            <ImageView
+                android:id="@+id/iv_icon_discounts"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/buttom_nav_btn_2_negativ" />
 
-    <TextView
-        android:id="@+id/tv_text_discounts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Discounts"
-        android:fontFamily="@font/exo_medium"
-        android:textColor="@color/text4"
-        android:textSize="12sp"/>
+            <TextView
+                android:id="@+id/tv_text_discounts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/exo_medium"
+                android:text="Discounts"
+                android:textColor="@color/text4"
+                android:textSize="12sp" />
 
-</LinearLayout>
+        </LinearLayout>
 
-<LinearLayout
-    android:id="@+id/ll_nav_order"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="8dp"
-    android:clickable="true"
-    android:focusable="true">
+        <LinearLayout
+            android:id="@+id/ll_nav_order"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/iv_icon_order"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/buttom_nav_btn_3_negativ"/>
+            <ImageView
+                android:id="@+id/iv_icon_order"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/buttom_nav_btn_3_negativ" />
 
-    <TextView
-        android:id="@+id/tv_text_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Order"
-        android:fontFamily="@font/exo_medium"
-        android:textColor="@color/text4"
-        android:textSize="12sp"/>
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_text_order"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/exo_medium"
+                android:text="Order"
+                android:textColor="@color/text4"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-<LinearLayout
-    android:id="@+id/ll_nav_account"
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="8dp"
-    android:clickable="true"
-    android:focusable="true">
+        <LinearLayout
+            android:id="@+id/ll_nav_account"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-    <ImageView
-        android:id="@+id/iv_icon_account"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/buttom_nav_btn_4_negativ"/>
+            <ImageView
+                android:id="@+id/iv_icon_account"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/buttom_nav_btn_4_negativ" />
 
-    <TextView
-        android:id="@+id/tv_text_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Account"
-        android:fontFamily="@font/exo_medium"
-        android:textColor="@color/text4"
-        android:textSize="12sp"/>
-</LinearLayout>
+            <TextView
+                android:id="@+id/tv_text_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/exo_medium"
+                android:text="Account"
+                android:textColor="@color/text4"
+                android:textSize="12sp" />
+        </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>
