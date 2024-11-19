@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentFinalRegistrationBinding
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
-import com.spase_y.vladfooddelivery.root.MainActivity
+import com.spase_y.vladfooddelivery.root.ui.presentation.MainActivity
 
 
 class FinalRegistrationFragment : Fragment() {

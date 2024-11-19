@@ -13,8 +13,7 @@ import com.spase_y.vladfooddelivery.databinding.FragmentPhoneNumberBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.presentation.GetCodeFragment
 import com.spase_y.vladfooddelivery.loading.login.ui.model.PhoneNumberScreenState
 import com.spase_y.vladfooddelivery.loading.login.ui.view_model.PhoneNumberViewModel
-import com.spase_y.vladfooddelivery.root.MainActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.spase_y.vladfooddelivery.root.ui.presentation.MainActivity
 
 
 class PhoneNumberFragment : Fragment() {

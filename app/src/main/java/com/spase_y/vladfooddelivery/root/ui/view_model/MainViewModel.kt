@@ -1,4 +1,4 @@
-package com.spase_y.vladfooddelivery.loading
+package com.spase_y.vladfooddelivery.root.ui.view_model
 
 import android.content.SharedPreferences
 
@@ -7,9 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.os.Handler
 import android.os.Looper
+import com.spase_y.vladfooddelivery.root.login_status.domain.api.LoginUserInteractor
+import com.spase_y.vladfooddelivery.root.ui.model.MainScreenState
 
 class MainViewModel(
-    private val sharedPreferences: SharedPreferences
+    private val loginUserInteractor: LoginUserInteractor
 ) : ViewModel() {
 
     private val mainLd = MutableLiveData<MainScreenState?>()
@@ -24,20 +26,13 @@ class MainViewModel(
 
     private fun checkUserLoginStatus(){
         mainLd.postValue(MainScreenState.Loading)
-        Handler(Looper.getMainLooper()).postDelayed({
-            val isLoggedIn = isUserLoggedIn()
-            mainLd.postValue(MainScreenState.Result(isLoggedIn))
-        },1000)
+        val isLoggedIn = loginUserInteractor.isUserLoggedIn()
+        mainLd.postValue(MainScreenState.Result(isLoggedIn))
     }
 
-
-    fun isUserLoggedIn(): Boolean {
-        val number = sharedPreferences.getString("user_number", null)
-        return !number.isNullOrEmpty()
-    }
 
     fun saveUserNumber() {
-        sharedPreferences.edit().putString("user_number", userNumber).apply()
+        return loginUserInteractor.saveUserData(userNumber)
     }
     fun setNumber(value: String){
         userNumber = value

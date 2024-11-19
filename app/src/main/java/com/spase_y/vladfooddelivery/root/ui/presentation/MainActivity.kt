@@ -1,17 +1,16 @@
-package com.spase_y.vladfooddelivery.root
+package com.spase_y.vladfooddelivery.root.ui.presentation
 
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.spase_y.vladfooddelivery.loading.main.LoadingFragment
 import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.loading.MainScreenState
-import com.spase_y.vladfooddelivery.loading.MainViewModel
-import com.spase_y.vladfooddelivery.loading.main.MainBottomSheetFragment
+import com.spase_y.vladfooddelivery.root.ui.model.MainScreenState
+import com.spase_y.vladfooddelivery.root.ui.view_model.MainViewModel
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
+import com.spase_y.vladfooddelivery.root.login_status.domain.api.LoginUserInteractor
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 is MainScreenState.Result -> {
                     val progressBar = findViewById<ProgressBar>(R.id.pbMain)
                     progressBar.visibility = View.INVISIBLE
-                    if (state.isUserLoggedIn) {
+                    if (state.isUserLoggedIn == LoginUserInteractor.UserStatus.LOGIN) {
                         showMenu()
                     } else {
                         showLoadingFragment()

@@ -1,6 +1,7 @@
 package com.spase_y.vladfooddelivery.loading.registration.ui.presentation
 
 import android.os.Bundle
+import android.telephony.AccessNetworkConstants.GeranBand
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
@@ -12,9 +13,10 @@ import androidx.core.widget.doOnTextChanged
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentSetUpProfileBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.presentation.GetCodeFragment
+import com.spase_y.vladfooddelivery.loading.login.ui.presentation.PhoneNumberFragment.Companion.GET_CODE_TAG
 import com.spase_y.vladfooddelivery.loading.registration.ui.model.SetupProfileScreenState
 import com.spase_y.vladfooddelivery.loading.registration.ui.view_model.SetupProfileViewModel
-import com.spase_y.vladfooddelivery.root.MainActivity
+import com.spase_y.vladfooddelivery.root.ui.presentation.MainActivity
 
 
 class SetUpProfileFragment : Fragment() {
@@ -100,6 +102,10 @@ class SetUpProfileFragment : Fragment() {
     fun openEnterCodeFragment(){
         val number = binding.etPhoneNumberProfile.text.toString()
         (requireActivity() as MainActivity).viewModel.setNumber(number)
+        val getCodeFragment = GetCodeFragment()
+        val newArguments = Bundle()
+        newArguments.putString(GET_CODE_TAG,number)
+        getCodeFragment.arguments = newArguments
         parentFragmentManager.beginTransaction()
             .replace(R.id.main, GetCodeFragment())
             .addToBackStack(null)
