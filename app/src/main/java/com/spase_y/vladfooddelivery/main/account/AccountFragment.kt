@@ -1,17 +1,22 @@
 package com.spase_y.vladfooddelivery.main.account
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAccountBinding
+import com.spase_y.vladfooddelivery.root.theme.domain.api.ThemeInteractor
+import org.koin.android.ext.android.inject
 
 
 class AccountFragment : Fragment() {
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
+    private val themeInteractor:ThemeInteractor by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,39 @@ class AccountFragment : Fragment() {
         binding.cvLanguageOn.setOnClickListener {
             binding.cvLanguageOff.visibility = View.VISIBLE
             binding.cvLanguageOn.visibility = View.GONE
+        }
+
+        val currentTheme = themeInteractor.getCurrentTheme()
+        if (currentTheme == ThemeInteractor.ApplicationTheme.DAY) {
+            binding.ivSwitchOn.visibility = View.VISIBLE
+            binding.ivSwitchOff.visibility = View.GONE
+        } else {
+            binding.ivSwitchOn.visibility = View.GONE
+            binding.ivSwitchOff.visibility = View.VISIBLE
+        }
+
+        binding.ivSwitchOn.setOnClickListener {
+            binding.ivSwitchOff.visibility = View.VISIBLE
+            binding.ivSwitchOn.visibility = View.GONE
+            themeInteractor.changeCurrentTheme()
+            applyTheme()
+        }
+
+        binding.ivSwitchOff.setOnClickListener {
+            binding.ivSwitchOff.visibility = View.GONE
+            binding.ivSwitchOn.visibility = View.VISIBLE
+            themeInteractor.changeCurrentTheme()
+            applyTheme()
+        }
+    }
+    private fun applyTheme() {
+
+        val currentTheme = themeInteractor.getCurrentTheme()
+        requireActivity().window.apply {
+            decorView.setBackgroundColor(
+                if (currentTheme == ThemeInteractor.ApplicationTheme.DAY) Color.WHITE
+                else Color.BLACK
+            )
         }
     }
 

@@ -80,10 +80,22 @@
             android:textSize="16sp" />
 
         <ImageView
+            android:id="@+id/ivSwitchOn"
             android:layout_width="62dp"
             android:layout_height="32dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/switch_on" />
+            android:src="@drawable/switch_on"
+            android:visibility="visible"/>
+
+        <ImageView
+            android:id="@+id/ivSwitchOff"
+            android:layout_width="62dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/switch_off"
+            android:visibility="gone"/>
+
+
     </LinearLayout>
 
     <ImageView
