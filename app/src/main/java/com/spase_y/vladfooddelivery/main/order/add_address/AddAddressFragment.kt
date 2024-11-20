@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAddAddressBinding
+import com.spase_y.vladfooddelivery.main.add_card.registration_card.AddCardRegistrationFragment
 
 
 class AddAddressFragment : Fragment() {
@@ -25,6 +26,14 @@ class AddAddressFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+        binding.btnSave.setOnClickListener {
+            requireActivity()
+                .supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fcvMainApp, AddCardRegistrationFragment())
+                .addToBackStack(null)
+                .commit()
         }
     }
 
