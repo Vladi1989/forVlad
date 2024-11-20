@@ -9,7 +9,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.spase_y.vladfooddelivery.R
+import com.spase_y.vladfooddelivery.loading.main.MainBottomSheetFragment
 import com.spase_y.vladfooddelivery.main.account.AccountFragment
 import com.spase_y.vladfooddelivery.main.discounts.DiscountsFragment
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
@@ -41,18 +44,30 @@ class MainAppFragment : Fragment() {
 
 
         navHome.setOnClickListener{
+            YoYo.with(Techniques.Bounce) // Выбираем эффект
+                .duration(700)             // Продолжительность анимации
+                .playOn(navHome)            // Применяем анимацию к кнопке
             replaceFragment(MenuFragment())
             setActiveNavIcon(R.id.ll_nav_home)
         }
         navDiscounts.setOnClickListener{
+            YoYo.with(Techniques.Bounce) // Выбираем эффект
+                .duration(700)             // Продолжительность анимации
+                .playOn(navDiscounts)
             replaceFragment(DiscountsFragment())
             setActiveNavIcon(R.id.ll_nav_discounts)
         }
         navOrder.setOnClickListener {
+            YoYo.with(Techniques.Bounce) // Выбираем эффект
+                .duration(700)             // Продолжительность анимации
+                .playOn(navOrder)
             replaceFragment(ListOrdersFragment())
             setActiveNavIcon(R.id.ll_nav_order)
         }
         navAccount.setOnClickListener {
+            YoYo.with(Techniques.Bounce) // Выбираем эффект
+                .duration(700)             // Продолжительность анимации
+                .playOn(navAccount)
             replaceFragment(AccountFragment())
             setActiveNavIcon(R.id.ll_nav_account)
         }
@@ -140,3 +155,5 @@ class MainAppFragment : Fragment() {
         }
     }
 }
+
+

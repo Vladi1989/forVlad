@@ -50,7 +50,7 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
-
+    implementation ("com.daimajia.androidanimations:library:2.4@aar")
     implementation ("io.insert-koin:koin-core:3.4.2")
     implementation ("io.insert-koin:koin-android:3.4.2")
 
