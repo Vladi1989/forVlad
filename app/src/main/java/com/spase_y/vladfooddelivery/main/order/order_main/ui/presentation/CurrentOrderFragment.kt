@@ -42,10 +42,18 @@ class CurrentOrderFragment : Fragment() {
         }
 
         binding.btnAddToCart.setOnClickListener {
+            val deliveryFragment = DeliveryFragment()
+            val bundle = Bundle().apply {
+                putString("amountOfOrder", binding.tvAmountOfOrder.text.toString())
+                putString("deliveryPrice",binding.tvDeliveryPrice.text.toString())
+                putString("totalPrice",binding.tvTotal.text.toString())
+            }
+            deliveryFragment.arguments = bundle
+
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fcvMainApp, DeliveryFragment())
+                .replace(R.id.fcvMainApp, deliveryFragment)
                 .addToBackStack(null)
                 .commit()
         }

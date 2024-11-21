@@ -26,7 +26,20 @@ class DeliveryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnAddToCart.setOnClickListener {
+
+        arguments?.let { bundle ->
+            val amountOfOrder = bundle.getString("amountOfOrder") ?: "$0.00"
+            val deliveryPrice = bundle.getString("deliveryPrice") ?: "$0.00"
+            val totalPrice  = bundle.getString("totalPrice") ?: "$0.00"
+
+            binding.tvAmountOfOrder.text = amountOfOrder
+            binding.tvDeliveryPrice.text = deliveryPrice
+            binding.tvTotal.text = totalPrice
+
+        }
+
+
+        binding.btnGoPayment.setOnClickListener {
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction()
