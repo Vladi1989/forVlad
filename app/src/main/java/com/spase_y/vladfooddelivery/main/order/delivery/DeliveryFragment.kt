@@ -27,6 +27,10 @@ class DeliveryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.ivArrowBack3.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
         arguments?.let { bundle ->
             val amountOfOrder = bundle.getString("amountOfOrder") ?: "$0.00"
             val deliveryPrice = bundle.getString("deliveryPrice") ?: "$0.00"
