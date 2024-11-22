@@ -64,19 +64,25 @@ class CurrentOrderFragment : Fragment() {
 
             when (it){
                 is OrderScreenState.Success -> {
-                    orderAdapter = OrderAdapter(it.list)
+                    val orderList = it.list.toMutableList()
+                    orderAdapter = OrderAdapter(orderList){ totalPrice ->
+                        val deliveryPrice = 3f
+                        val totalWithDelivery = totalPrice + deliveryPrice
+
+                        binding.tvAmountOfOrder.text = "$${"%.2f".format(totalPrice)}"
+                        binding.tvDeliveryPrice.text = "$${"%.2f".format(deliveryPrice)}"
+                        binding.tvTotal.text = "$${"%.2f".format(totalWithDelivery)}"
+
+                    }
 
                     var totalSumWithoutDelivery = 0f
                     var priceForDelivery = 3f
-                    var totalSum = 0f
 
-                    it.list.forEach { item ->
-                        totalSumWithoutDelivery += item.price
-                        Log.d("ITEM","${item.price}")
+
+                    orderList.forEach { item ->
+                        totalSumWithoutDelivery += item.price * item.quantity
                     }
-                    Log.d("TOTAL_WITHOUT_DELIVERY","$totalSumWithoutDelivery")
-                    totalSum = totalSumWithoutDelivery + priceForDelivery
-                    Log.d("TOTAL","$totalSum")
+                    val totalSum = totalSumWithoutDelivery + priceForDelivery
 
                     binding.tvAmountOfOrder.text = "$${"%.2f".format(totalSumWithoutDelivery)}"
                     binding.tvDeliveryPrice.text = "$${"%.2f".format(priceForDelivery)}"
