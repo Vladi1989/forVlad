@@ -15,11 +15,13 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.spase_y.vladfooddelivery.R
+import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.FragmentMenuBinding
 import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.promotions_adapters.PromotionsAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter.RecommendMenuAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter
+import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter.HorizontalSpaceItemDecoration
 import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
@@ -202,6 +204,8 @@ class MenuFragment : Fragment() {
         )
         binding.rvRecommend.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvRecommend.adapter = recommendMenuAdapter
+
+        binding.rvRecommend.addItemDecoration(HorizontalSpaceItemDecoration(28.toPx(requireContext())))
 
         val itemClickListener = object : MenuAdapter.OnItemClickListener{
             override fun onItemClick(item: MenuItem) {

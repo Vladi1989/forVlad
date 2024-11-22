@@ -44,6 +44,7 @@ class RecommendMenuAdapter(
         if(position == 0){
             val layoutParams = holder.itemView.layoutParams as RecyclerView.LayoutParams
             layoutParams.leftMargin = 28.toPx(holder.itemView.context).toInt()
+
             holder.itemView.layoutParams = layoutParams
         }
     }
