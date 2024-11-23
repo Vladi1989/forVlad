@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAddressNearYouBinding
+import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
 
 
 class AddressNearYouFragment : Fragment() {
@@ -20,6 +21,17 @@ class AddressNearYouFragment : Fragment() {
     ): View? {
         _binding = FragmentAddressNearYouBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSave.setOnClickListener {
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.main,DeliveryFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onDestroyView() {
