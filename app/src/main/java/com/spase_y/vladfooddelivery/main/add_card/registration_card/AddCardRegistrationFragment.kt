@@ -37,6 +37,13 @@ class AddCardRegistrationFragment : Fragment() {
     }
 
     private fun setupFocusListeners() {
+
+        binding.cardView2.setOnClickListener {
+            flipCard(binding.cardView3,binding.cardView2)
+        }
+        binding.cardView3.setOnClickListener {
+            flipCard(binding.cardView2,binding.cardView3)
+        }
         // Слушатель фокуса для etAddCountry3
         binding.etAddCountry3.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -82,12 +89,10 @@ class AddCardRegistrationFragment : Fragment() {
         val hideAnimator = ObjectAnimator.ofFloat(toHide, "rotationY", 0f, 90f).apply {
             duration = 300
         }
-
         // Анимация показа
         val showAnimator = ObjectAnimator.ofFloat(toShow, "rotationY", -90f, 0f).apply {
             duration = 300
         }
-
         hideAnimator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 toHide.visibility = View.GONE // Скрываем карточку
