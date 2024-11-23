@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentDetailsBinding
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 
 
 class DetailsFragment : Fragment() {
@@ -20,6 +22,21 @@ class DetailsFragment : Fragment() {
     ): View? {
         _binding = FragmentDetailsBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.ivArrowBack7.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+
+        val mainAppFragment = parentFragment as? MainAppFragment
+
+        mainAppFragment?.let {
+            it.hideBottomNavigation()
+        }
+
     }
 
     override fun onDestroyView() {

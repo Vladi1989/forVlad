@@ -11,13 +11,12 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.loading.main.MainBottomSheetFragment
 import com.spase_y.vladfooddelivery.main.account.AccountFragment
 import com.spase_y.vladfooddelivery.main.discounts.DiscountsFragment
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
 import com.spase_y.vladfooddelivery.main.order.list_orders.ListOrdersFragment
-import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 
 
 class MainAppFragment : Fragment() {
@@ -72,6 +71,16 @@ class MainAppFragment : Fragment() {
             setActiveNavIcon(R.id.ll_nav_account)
         }
 
+    }
+
+    fun hideBottomNavigation() {
+        val bottomNav = requireActivity().findViewById<CardView>(R.id.cardViewBottomNavigation)
+        bottomNav.visibility = View.GONE
+    }
+
+    fun showBottomNavigation() {
+        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.customBottomNav)
+        bottomNav.visibility = View.VISIBLE
     }
 
 
