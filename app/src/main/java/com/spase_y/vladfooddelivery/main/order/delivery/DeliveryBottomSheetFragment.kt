@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentDeliveryBottomSheetBinding
+import com.spase_y.vladfooddelivery.main.order.AddressNearYouFragment
 import com.spase_y.vladfooddelivery.main.order.add_address.AddAddressFragment
 
 
@@ -31,6 +32,14 @@ class DeliveryBottomSheetFragment : BottomSheetDialogFragment() {
 
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main, AddAddressFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.btnSelfDelivery.setOnClickListener {
+            dismiss()
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main, AddressNearYouFragment())
                 .addToBackStack(null)
                 .commit()
         }

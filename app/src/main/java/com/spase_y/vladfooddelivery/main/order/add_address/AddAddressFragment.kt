@@ -9,6 +9,7 @@ import android.widget.EditText
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAddAddressBinding
 import com.spase_y.vladfooddelivery.main.add_card.registration_card.AddCardRegistrationFragment
+import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
 
 
 class AddAddressFragment : Fragment() {
@@ -32,7 +33,7 @@ class AddAddressFragment : Fragment() {
             requireActivity()
                 .supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.fcvMainApp, AddCardRegistrationFragment())
+                .replace(R.id.main, DeliveryFragment())
                 .addToBackStack(null)
                 .commit()
         }
