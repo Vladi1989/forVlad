@@ -1,19 +1,18 @@
 package com.spase_y.vladfooddelivery.main.order.delivery
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.databinding.FragmentDeliverySelfBottomSheetBinding
+import com.spase_y.vladfooddelivery.databinding.FragmentCardPaymentBottomSheetBinding
 
 
-class DeliverySelfBottomSheetFragment : BottomSheetDialogFragment() {
+class CardBottomSheetFragment : BottomSheetDialogFragment() {
 
     private val binding by lazy {
-        FragmentDeliverySelfBottomSheetBinding.inflate(layoutInflater)
+        FragmentCardPaymentBottomSheetBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(

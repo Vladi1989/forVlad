@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentDeliveryBinding
-import com.spase_y.vladfooddelivery.loading.main.MainBottomSheetFragment
 import com.spase_y.vladfooddelivery.main.order.add_address.AddAddressFragment
 
 
@@ -29,11 +28,11 @@ class DeliveryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.clAddShippingMethod.setOnClickListener {
-            val bottomDelivery = DeliverySelfBottomSheetFragment()
+            val bottomDelivery = DeliveryBottomSheetFragment()
             bottomDelivery.show(parentFragmentManager,bottomDelivery.tag)
         }
         binding.clAddPaymentMethod.setOnClickListener{
-            val bottomPayment = DeliveryCardBottomSheetFragment()
+            val bottomPayment = CardBottomSheetFragment()
             bottomPayment.show(parentFragmentManager,bottomPayment.tag)
         }
 
