@@ -53,6 +53,7 @@ dependencies {
     implementation ("com.daimajia.androidanimations:library:2.4@aar")
     implementation ("io.insert-koin:koin-core:3.4.2")
     implementation ("io.insert-koin:koin-android:3.4.2")
+    implementation ("com.github.captain-miao:optroundcardview:1.0.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

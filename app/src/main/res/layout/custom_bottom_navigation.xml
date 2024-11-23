@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.github.captain_miao.optroundcardview.OptRoundCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:id="@+id/cardViewBottomNavigation"
     android:layout_height="80dp"
     android:layout_margin="8dp"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="12dp"
+    app:optRoundCardCornerRadius="12dp"
+    app:optRoundCardLeftBottomCorner="false"
+    app:optRoundCardRightBottomCorner="false"
+    app:optRoundCardBackgroundColor="@color/white"
+
+    >
 
     <LinearLayout
         android:id="@+id/llBottomNavigation"
@@ -128,4 +134,4 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</com.github.captain_miao.optroundcardview.OptRoundCardView>
