@@ -60,6 +60,7 @@
             android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAddShippingMethod"
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:layout_marginHorizontal="28dp"
@@ -113,6 +114,7 @@
             android:textStyle="bold" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clAddPaymentMethod"
             android:layout_width="match_parent"
             android:layout_height="51dp"
             android:layout_marginHorizontal="28dp"

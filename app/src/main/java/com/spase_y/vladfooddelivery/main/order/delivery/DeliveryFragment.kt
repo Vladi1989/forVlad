@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentDeliveryBinding
+import com.spase_y.vladfooddelivery.loading.main.MainBottomSheetFragment
 import com.spase_y.vladfooddelivery.main.order.add_address.AddAddressFragment
 
 
@@ -26,6 +27,16 @@ class DeliveryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.clAddShippingMethod.setOnClickListener {
+            val bottomDelivery = DeliverySelfBottomSheetFragment()
+            bottomDelivery.show(parentFragmentManager,bottomDelivery.tag)
+        }
+        binding.clAddPaymentMethod.setOnClickListener{
+            val bottomPayment = DeliveryCardBottomSheetFragment()
+            bottomPayment.show(parentFragmentManager,bottomPayment.tag)
+        }
+
 
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

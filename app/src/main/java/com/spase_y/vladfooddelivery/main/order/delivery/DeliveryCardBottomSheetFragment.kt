@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.databinding.FragmentDeliverySelfBottomSheetBinding
+import com.spase_y.vladfooddelivery.databinding.FragmentDeliveryCardPaymentBottomSheetBinding
 
 
-class DeliverySelfBottomSheetFragment : BottomSheetDialogFragment() {
+class DeliveryCardBottomSheetFragment : BottomSheetDialogFragment() {
 
-    private val binding by lazy {
-        FragmentDeliverySelfBottomSheetBinding.inflate(layoutInflater)
+    private val binding by lazy{
+        FragmentDeliveryCardPaymentBottomSheetBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -27,6 +27,4 @@ class DeliverySelfBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
-
 }
