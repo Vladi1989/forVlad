@@ -108,6 +108,8 @@
         android:id="@+id/cvHelpOff"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        app:cardElevation="4dp"
+        android:layout_marginHorizontal="2dp"
         android:layout_marginTop="24dp"
         android:background="@color/white"
         android:visibility="visible"
@@ -143,6 +145,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cvHelpOn"
         android:layout_width="match_parent"
+        app:cardElevation="4dp"
+        android:layout_marginHorizontal="2dp"
         android:layout_height="184dp"
         android:layout_marginTop="24dp"
         android:visibility="gone"
@@ -249,6 +253,8 @@
         android:id="@+id/cvLanguageOff"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        app:cardElevation="4dp"
+        android:layout_marginHorizontal="2dp"
         android:layout_marginTop="24dp"
         android:background="@color/white"
         android:visibility="visible"
@@ -286,7 +292,9 @@
         android:layout_width="match_parent"
         android:layout_height="184dp"
         android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="2dp"
         android:visibility="gone"
+        app:cardElevation="4dp"
         app:cardCornerRadius="12dp">
 
         <LinearLayout
@@ -376,6 +384,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
+        android:layout_marginHorizontal="2dp"
         android:background="@color/white"
         app:cardCornerRadius="12dp">
 
@@ -409,6 +418,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginHorizontal="2dp"
         android:layout_marginTop="24dp"
         android:background="@color/white"
         app:cardCornerRadius="12dp">
