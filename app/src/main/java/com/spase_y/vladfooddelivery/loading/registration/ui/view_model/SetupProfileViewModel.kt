@@ -29,8 +29,8 @@ class SetupProfileViewModel {
         isAcceptPolicy = boolean
         emit()
     }
-    private fun emit(){
-        if (isValidNumber == isValidDate == isValidName == isAcceptPolicy){
+    private fun emit() {
+        if (isValidNumber && isValidDate && isValidName && isAcceptPolicy) {
             screenStateLD.postValue(SetupProfileScreenState.CanGoNext)
         } else {
             screenStateLD.postValue(SetupProfileScreenState.CantGoNext)
