@@ -11,7 +11,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
-
+import android.widget.EditText
+import com.spase_y.vladfooddelivery.R
 
 
 class AddCardRegistrationFragment : Fragment() {
@@ -27,19 +28,29 @@ class AddCardRegistrationFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setFocusChangeListener(binding.etCardNumber)
+        setFocusChangeListener(binding.etCardHolderName)
+        setFocusChangeListener(binding.etDate)
+    }
+
     private fun setupFocusListeners() {
         // Слушатель фокуса для etAddCountry3
         binding.etAddCountry3.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
+                binding.etAddCountry3.setBackgroundResource(R.drawable.button_shape_stroke)
                 flipCard(binding.cardView3, binding.cardView2)
             } else {
+                binding.etAddCountry3.setBackgroundResource(R.drawable.button_shape_stroke_gray)
                 flipCard(binding.cardView2, binding.cardView3)
             }
         }
 
         // Слушатели фокуса для других EditText
         val otherEditTexts = listOf(
-            binding.etAddCountry, binding.etAddCountry1, binding.etAddCountry2
+            binding.etCardNumber, binding.etCardHolderName, binding.etDate
         )
 
         for (editText in otherEditTexts) {
@@ -95,9 +106,19 @@ class AddCardRegistrationFragment : Fragment() {
         val scale = view.resources.displayMetrics.density
         view.cameraDistance = 8000 * scale
     }
+    private fun setFocusChangeListener(editText: EditText){
+        editText.onFocusChangeListener = View.OnFocusChangeListener{_,hasFocus ->
+            if(hasFocus){
+                editText.setBackgroundResource(R.drawable.button_shape_stroke)
+            } else {
+                editText.setBackgroundResource(R.drawable.button_shape_stroke_gray)
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

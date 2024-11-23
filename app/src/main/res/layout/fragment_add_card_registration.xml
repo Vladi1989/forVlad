@@ -269,7 +269,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/etAddCountry"
+                android:id="@+id/etCardNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -295,10 +295,10 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etAddCountry" />
+                app:layout_constraintTop_toBottomOf="@+id/etCardNumber" />
 
             <EditText
-                android:id="@+id/etAddCountry1"
+                android:id="@+id/etCardHolderName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -323,7 +323,7 @@
                 android:textColor="@color/text1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etAddCountry1" />
+                app:layout_constraintTop_toBottomOf="@+id/etCardHolderName" />
 
             <TextView
                 android:id="@+id/textView23"
@@ -335,10 +335,10 @@
                 android:textColor="@color/text1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="@+id/etAddCountry3"
-                app:layout_constraintTop_toBottomOf="@+id/etAddCountry1" />
+                app:layout_constraintTop_toBottomOf="@+id/etCardHolderName" />
 
             <EditText
-                android:id="@+id/etAddCountry2"
+                android:id="@+id/etDate"
                 android:layout_width="161dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

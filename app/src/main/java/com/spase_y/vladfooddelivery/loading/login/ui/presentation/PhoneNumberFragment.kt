@@ -35,6 +35,14 @@ class PhoneNumberFragment : Fragment() {
         binding.ivArrowBack1.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+        binding.etPhoneNumber.onFocusChangeListener = View.OnFocusChangeListener{_,hasFocus ->
+            if(hasFocus){
+                binding.etPhoneNumber.setBackgroundResource(R.drawable.button_shape_stroke)
+            } else {
+                binding.etPhoneNumber.setBackgroundResource(R.drawable.button_shape_stroke_gray)
+            }
+        }
+
 
         binding.etPhoneNumber.doOnTextChanged { text, start, before, count ->
             if (!text.toString().contains("+")){

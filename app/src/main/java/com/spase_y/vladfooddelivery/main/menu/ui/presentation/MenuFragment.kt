@@ -118,6 +118,13 @@ class MenuFragment : Fragment() {
                 }
             }
         }
+        binding.edSearch.onFocusChangeListener = View.OnFocusChangeListener{_,hasFocus ->
+            if(hasFocus){
+                binding.llSearchFood.setBackgroundResource(R.drawable.button_shape_stroke)
+            } else {
+                binding.llSearchFood.setBackgroundResource(R.drawable.shape_search_view_stroke_text5)
+            }
+        }
 
         binding.cvCart.setOnClickListener{
             replaceFragment(CurrentOrderFragment())

@@ -28,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/llSearchFood"
             android:layout_width="281dp"
             android:layout_height="48dp"
             android:layout_weight="1"

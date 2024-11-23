@@ -31,6 +31,14 @@ class DeliveryFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        binding.etAddComment.onFocusChangeListener = View.OnFocusChangeListener{_,hasFocus ->
+            if(hasFocus){
+                binding.etAddComment.setBackgroundResource(R.drawable.button_shape_stroke)
+            } else {
+                binding.etAddComment.setBackgroundResource(R.drawable.button_shape_stroke_gray)
+            }
+        }
+
         arguments?.let { bundle ->
             val amountOfOrder = bundle.getString("amountOfOrder") ?: "$0.00"
             val deliveryPrice = bundle.getString("deliveryPrice") ?: "$0.00"
@@ -41,8 +49,6 @@ class DeliveryFragment : Fragment() {
             binding.tvTotal.text = totalPrice
 
         }
-
-
         binding.btnGoPayment.setOnClickListener {
             requireActivity()
                 .supportFragmentManager
