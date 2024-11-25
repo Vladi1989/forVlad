@@ -32,7 +32,7 @@ class CardBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main,AddCardRegistrationFragment())
+                .replace(R.id.fcvMainApp,AddCardRegistrationFragment())
                 .addToBackStack(null)
                 .commit()
         }

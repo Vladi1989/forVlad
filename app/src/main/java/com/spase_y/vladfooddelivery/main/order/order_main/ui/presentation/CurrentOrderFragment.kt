@@ -10,10 +10,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentCurrentOrderBinding
+import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.adapters.OrderAdapter
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.model.OrderScreenState
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.view_model.OrderViewModel
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import org.koin.android.ext.android.inject
 
 
@@ -23,8 +25,6 @@ class CurrentOrderFragment : Fragment() {
     private lateinit var orderAdapter: OrderAdapter
     private var _binding: FragmentCurrentOrderBinding? = null
     private val binding get() = _binding!!
-    lateinit var theAmountOfTheOrder:TextView
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,7 @@ class CurrentOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (requireParentFragment() as MainAppFragment).hideNavigation()
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -59,26 +59,26 @@ class CurrentOrderFragment : Fragment() {
         }
 
         binding.rvMyOrder.layoutManager = LinearLayoutManager(context)
+
+        orderAdapter = OrderAdapter({ oldMenuItem, newMenuItem ->
+            vm.updateItem(oldMenuItem,newMenuItem)
+            vm.loadOrder()
+        },{ menuItem ->
+            vm.removeItem(menuItem)
+            vm.loadOrder()
+        })
+        binding.rvMyOrder.adapter = orderAdapter
+        val priceForDelivery = 3f
         vm.loadOrder()
         vm.orderLd.observe(viewLifecycleOwner) {
 
             when (it){
                 is OrderScreenState.Success -> {
                     val orderList = it.list.toMutableList()
-                    orderAdapter = OrderAdapter(orderList){ totalPrice ->
-                        val deliveryPrice = 3f
-                        val totalWithDelivery = totalPrice + deliveryPrice
-
-                        binding.tvAmountOfOrder.text = "$${"%.2f".format(totalPrice)}"
-                        binding.tvDeliveryPrice.text = "$${"%.2f".format(deliveryPrice)}"
-                        binding.tvTotal.text = "$${"%.2f".format(totalWithDelivery)}"
-
-                    }
+                    orderAdapter.orderList = orderList
+                    orderAdapter.notifyDataSetChanged()
 
                     var totalSumWithoutDelivery = 0f
-                    var priceForDelivery = 3f
-
-
                     orderList.forEach { item ->
                         totalSumWithoutDelivery += item.price * item.quantity
                     }
@@ -87,8 +87,6 @@ class CurrentOrderFragment : Fragment() {
                     binding.tvAmountOfOrder.text = "$${"%.2f".format(totalSumWithoutDelivery)}"
                     binding.tvDeliveryPrice.text = "$${"%.2f".format(priceForDelivery)}"
                     binding.tvTotal.text = "$${"%.2f".format(totalSum)}"
-
-                    binding.rvMyOrder.adapter = orderAdapter
                     binding.pbLoading.visibility = View.GONE
                 }
                 is OrderScreenState.Loading -> {

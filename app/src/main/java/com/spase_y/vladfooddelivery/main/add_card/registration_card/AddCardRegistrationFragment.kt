@@ -14,6 +14,7 @@ import android.animation.ObjectAnimator
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import com.spase_y.vladfooddelivery.R
 
 
@@ -33,6 +34,32 @@ class AddCardRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.etCardNumber.addTextChangedListener(object : TextWatcher{
+
+            private var isUpdating = false
+            private val space = ' '
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(isUpdating) return
+
+                val original = s.toString().replace("","")
+                val formatted = StringBuilder()
+
+                for(i in original.indices){
+                    if(i > 0 && i % 4 == 0){
+                        formatted.append(original[i])
+                    }
+                }
+                isUpdating = true
+                binding.etCardNumber.setText(formatted.toString())
+                binding.etCardNumber.setSelection(formatted.length)
+                isUpdating = false
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
 
         setFocusChangeListener(binding.etCardNumber)
         setFocusChangeListener(binding.etCardHolderName)

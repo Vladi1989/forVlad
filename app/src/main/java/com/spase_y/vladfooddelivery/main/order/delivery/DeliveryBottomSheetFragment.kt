@@ -31,7 +31,7 @@ class DeliveryBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main, AddAddressFragment())
+                .replace(R.id.fcvMainApp, AddAddressFragment())
                 .addToBackStack(null)
                 .commit()
         }
@@ -39,7 +39,7 @@ class DeliveryBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.main, AddressNearYouFragment())
+                .replace(R.id.fcvMainApp, AddressNearYouFragment())
                 .addToBackStack(null)
                 .commit()
         }

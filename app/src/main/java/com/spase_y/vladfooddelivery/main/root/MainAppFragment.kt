@@ -22,7 +22,7 @@ import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
 import com.spase_y.vladfooddelivery.main.order.list_orders.ListOrdersFragment
 
 
-class MainAppFragment : Fragment(), NavigationVisibilityController {
+class MainAppFragment : Fragment() {
 
     private var _binding: FragmentMainAppBinding? = null
     private val binding get() = _binding!!
@@ -38,10 +38,6 @@ class MainAppFragment : Fragment(), NavigationVisibilityController {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
 
         replaceFragment(MenuFragment())
         setActiveNavIcon(R.id.ll_nav_home)
@@ -78,15 +74,16 @@ class MainAppFragment : Fragment(), NavigationVisibilityController {
         _binding = null
     }
 
-    override fun hideNavigation() {
+    fun hideNavigation() {
         val bottomNav = requireActivity().findViewById<View>(R.id.customBottomNav)
         bottomNav.visibility = View.GONE
     }
 
-    override fun showNavigation() {
+    fun showNavigation() {
         val bottomNav = requireActivity().findViewById<View>(R.id.customBottomNav)
         bottomNav.visibility = View.VISIBLE
     }
+
 
     private fun replaceFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager
