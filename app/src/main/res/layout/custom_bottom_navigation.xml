@@ -11,9 +11,7 @@
     app:optRoundCardCornerRadius="12dp"
     app:optRoundCardLeftBottomCorner="false"
     app:optRoundCardRightBottomCorner="false"
-    app:optRoundCardBackgroundColor="@color/white"
-
-    >
+    app:optRoundCardBackgroundColor="@color/white">
 
     <LinearLayout
         android:id="@+id/llBottomNavigation"

@@ -11,6 +11,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import com.spase_y.vladfooddelivery.R
 
@@ -31,10 +33,13 @@ class AddCardRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         setFocusChangeListener(binding.etCardNumber)
         setFocusChangeListener(binding.etCardHolderName)
         setFocusChangeListener(binding.etDate)
     }
+
+
 
     private fun setupFocusListeners() {
 

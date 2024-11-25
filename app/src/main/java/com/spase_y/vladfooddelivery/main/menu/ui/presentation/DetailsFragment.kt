@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentDetailsBinding
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
+import com.spase_y.vladfooddelivery.main.root.NavigationVisibilityController
 
 
 class DetailsFragment : Fragment() {
@@ -31,11 +32,8 @@ class DetailsFragment : Fragment() {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        val mainAppFragment = parentFragment as? MainAppFragment
-
-        mainAppFragment?.let {
-            it.hideBottomNavigation()
-        }
+        val controller = parentFragment as? NavigationVisibilityController
+        controller?.hideNavigation()
 
     }
 

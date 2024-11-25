@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentCardPaymentBottomSheetBinding
+import com.spase_y.vladfooddelivery.main.add_card.registration_card.AddCardRegistrationFragment
 
 
 class CardBottomSheetFragment : BottomSheetDialogFragment() {
@@ -25,6 +27,15 @@ class CardBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnCardPayment.setOnClickListener {
+            dismiss()
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main,AddCardRegistrationFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
 

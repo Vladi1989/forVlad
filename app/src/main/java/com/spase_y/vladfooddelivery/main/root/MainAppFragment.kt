@@ -9,160 +9,164 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.github.captain_miao.optroundcardview.OptRoundCardView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spase_y.vladfooddelivery.R
+import com.spase_y.vladfooddelivery.databinding.FragmentMainAppBinding
 import com.spase_y.vladfooddelivery.main.account.AccountFragment
 import com.spase_y.vladfooddelivery.main.discounts.DiscountsFragment
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
 import com.spase_y.vladfooddelivery.main.order.list_orders.ListOrdersFragment
 
 
-class MainAppFragment : Fragment() {
+class MainAppFragment : Fragment(), NavigationVisibilityController {
+
+    private var _binding: FragmentMainAppBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main_app, container, false)
+        _binding = FragmentMainAppBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        replaceFragment(MenuFragment())
 
+
+
+
+        replaceFragment(MenuFragment())
         setActiveNavIcon(R.id.ll_nav_home)
 
-        val cart = view.findViewById<CardView>(R.id.cvCart)
-        val navHome = view.findViewById<LinearLayout>(R.id.ll_nav_home)
-        val navDiscounts = view.findViewById<LinearLayout>(R.id.ll_nav_discounts)
-        val navOrder = view.findViewById<LinearLayout>(R.id.ll_nav_order)
-        val navAccount = view.findViewById<LinearLayout>(R.id.ll_nav_account)
+        with(binding.customBottomNav) {
+            llNavHome.setOnClickListener {
+                animateNavItem(llNavHome)
+                replaceFragment(MenuFragment())
+                setActiveNavIcon(R.id.ll_nav_home)
+            }
 
+            llNavDiscounts.setOnClickListener {
+                animateNavItem(llNavDiscounts)
+                replaceFragment(DiscountsFragment())
+                setActiveNavIcon(R.id.ll_nav_discounts)
+            }
 
-        navHome.setOnClickListener{
-            YoYo.with(Techniques.Bounce) // Выбираем эффект
-                .duration(700)             // Продолжительность анимации
-                .playOn(navHome)            // Применяем анимацию к кнопке
-            replaceFragment(MenuFragment())
-            setActiveNavIcon(R.id.ll_nav_home)
-        }
-        navDiscounts.setOnClickListener{
-            YoYo.with(Techniques.Bounce) // Выбираем эффект
-                .duration(700)             // Продолжительность анимации
-                .playOn(navDiscounts)
-            replaceFragment(DiscountsFragment())
-            setActiveNavIcon(R.id.ll_nav_discounts)
-        }
-        navOrder.setOnClickListener {
-            YoYo.with(Techniques.Bounce) // Выбираем эффект
-                .duration(700)             // Продолжительность анимации
-                .playOn(navOrder)
-            replaceFragment(ListOrdersFragment())
-            setActiveNavIcon(R.id.ll_nav_order)
-        }
-        navAccount.setOnClickListener {
-            YoYo.with(Techniques.Bounce) // Выбираем эффект
-                .duration(700)             // Продолжительность анимации
-                .playOn(navAccount)
-            replaceFragment(AccountFragment())
-            setActiveNavIcon(R.id.ll_nav_account)
-        }
+            llNavOrder.setOnClickListener {
+                animateNavItem(llNavOrder)
+                replaceFragment(ListOrdersFragment())
+                setActiveNavIcon(R.id.ll_nav_order)
+            }
 
+            llNavAccount.setOnClickListener {
+                animateNavItem(llNavAccount)
+                replaceFragment(AccountFragment())
+                setActiveNavIcon(R.id.ll_nav_account)
+            }
+        }
     }
 
-    fun hideBottomNavigation() {
-        val bottomNav = requireActivity().findViewById<CardView>(R.id.cardViewBottomNavigation)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun hideNavigation() {
+        val bottomNav = requireActivity().findViewById<View>(R.id.customBottomNav)
         bottomNav.visibility = View.GONE
     }
 
-    fun showBottomNavigation() {
-        val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.customBottomNav)
+    override fun showNavigation() {
+        val bottomNav = requireActivity().findViewById<View>(R.id.customBottomNav)
         bottomNav.visibility = View.VISIBLE
     }
 
-
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fcvMainApp,fragment)
+            .replace(R.id.fcvMainApp, fragment)
             .addToBackStack(null)
             .commit()
     }
 
-
-
     private fun setActiveNavIcon(activeNavId: Int) {
-        view?.findViewById<ImageView>(R.id.iv_icon_home)?.apply {
-            setImageResource(R.drawable.buttom_nav_btn_1_negativ)
-            layoutParams = layoutParams.apply {
-                width = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-                height = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-            }
-            view?.findViewById<TextView>(R.id.tv_text_home)?.setTextColor(resources.getColor(R.color.text4))
-        }
-        view?.findViewById<ImageView>(R.id.iv_icon_discounts)?.apply {
-            setImageResource(R.drawable.buttom_nav_btn_2_negativ)
-            layoutParams = layoutParams.apply {
-                width = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-                height = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-            }
-            view?.findViewById<TextView>(R.id.tv_text_discounts)?.setTextColor(resources.getColor(R.color.text4))
-        }
-        view?.findViewById<ImageView>(R.id.iv_icon_order)?.apply {
-            setImageResource(R.drawable.buttom_nav_btn_3_negativ)
-            layoutParams = layoutParams.apply {
-                width = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-                height = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-            }
-            view?.findViewById<TextView>(R.id.tv_text_order)?.setTextColor(resources.getColor(R.color.text4))
-        }
-        view?.findViewById<ImageView>(R.id.iv_icon_account)?.apply {
-            setImageResource(R.drawable.buttom_nav_btn_4_negativ)
-            layoutParams = layoutParams.apply {
-                width = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-                height = resources.getDimensionPixelSize(R.dimen.inactive_icon_size) // 24dp
-            }
-            view?.findViewById<TextView>(R.id.tv_text_account)?.setTextColor(resources.getColor(R.color.text4))
-        }
+        with(binding) {
+            resetNavIcons()
 
-        when (activeNavId) {
-            R.id.ll_nav_home -> view?.findViewById<ImageView>(R.id.iv_icon_home)?.apply {
-                setImageResource(R.drawable.activ_button_1)
-                layoutParams = layoutParams.apply {
-                    width = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
-                    height = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
+            when (activeNavId) {
+                R.id.ll_nav_home -> {
+                    binding.customBottomNav.ivIconHome.setImageResource(R.drawable.activ_button_1)
+                    binding.customBottomNav.tvTextHome.setTextColor(resources.getColor(R.color.primary))
+                    resizeIcon(binding.customBottomNav.ivIconHome, true)
                 }
-                view?.findViewById<TextView>(R.id.tv_text_home)?.setTextColor(resources.getColor(R.color.primary))
-            }
-            R.id.ll_nav_discounts -> view?.findViewById<ImageView>(R.id.iv_icon_discounts)?.apply {
-                setImageResource(R.drawable.activ_button_2)
-                layoutParams = layoutParams.apply {
-                    width = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
-                    height = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
+                R.id.ll_nav_discounts -> {
+                    binding.customBottomNav.ivIconDiscounts.setImageResource(R.drawable.activ_button_2)
+                    binding.customBottomNav.tvTextDiscounts.setTextColor(resources.getColor(R.color.primary))
+                    resizeIcon(binding.customBottomNav.ivIconDiscounts, true)
                 }
-                view?.findViewById<TextView>(R.id.tv_text_discounts)?.setTextColor(resources.getColor(R.color.primary))
-            }
-            R.id.ll_nav_order -> view?.findViewById<ImageView>(R.id.iv_icon_order)?.apply {
-                setImageResource(R.drawable.activ_button_3)
-                layoutParams = layoutParams.apply {
-                    width = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
-                    height = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
+                R.id.ll_nav_order -> {
+                    binding.customBottomNav.ivIconOrder.setImageResource(R.drawable.activ_button_3)
+                    binding.customBottomNav.tvTextOrder.setTextColor(resources.getColor(R.color.primary))
+                    resizeIcon(binding.customBottomNav.ivIconOrder, true)
                 }
-                view?.findViewById<TextView>(R.id.tv_text_order)?.setTextColor(resources.getColor(R.color.primary))
-            }
-            R.id.ll_nav_account -> view?.findViewById<ImageView>(R.id.iv_icon_account)?.apply {
-                setImageResource(R.drawable.activ_button_4)
-                layoutParams = layoutParams.apply {
-                    width = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
-                    height = resources.getDimensionPixelSize(R.dimen.active_icon_size) // 36dp
+                R.id.ll_nav_account -> {
+                    binding.customBottomNav.ivIconAccount.setImageResource(R.drawable.activ_button_4)
+                    binding.customBottomNav.tvTextAccount.setTextColor(resources.getColor(R.color.primary))
+                    resizeIcon(binding.customBottomNav.ivIconAccount, true)
                 }
-                view?.findViewById<TextView>(R.id.tv_text_account)?.setTextColor(resources.getColor(R.color.primary))
             }
         }
     }
+
+    private fun resetNavIcons() {
+        with(binding) {
+            val inactiveColor = resources.getColor(R.color.text4)
+            val inactiveSize = resources.getDimensionPixelSize(R.dimen.inactive_icon_size)
+
+            binding.customBottomNav.ivIconHome.setImageResource(R.drawable.buttom_nav_btn_1_negativ)
+            binding.customBottomNav.tvTextHome.setTextColor(inactiveColor)
+            resizeIcon(binding.customBottomNav.ivIconHome, false)
+
+            binding.customBottomNav.ivIconDiscounts.setImageResource(R.drawable.buttom_nav_btn_2_negativ)
+            binding.customBottomNav.tvTextDiscounts.setTextColor(inactiveColor)
+            resizeIcon(binding.customBottomNav.ivIconDiscounts, false)
+
+            binding.customBottomNav.ivIconOrder.setImageResource(R.drawable.buttom_nav_btn_3_negativ)
+            binding.customBottomNav.tvTextOrder.setTextColor(inactiveColor)
+            resizeIcon(binding.customBottomNav.ivIconOrder, false)
+
+            binding.customBottomNav.ivIconAccount.setImageResource(R.drawable.buttom_nav_btn_4_negativ)
+            binding.customBottomNav.tvTextAccount.setTextColor(inactiveColor)
+            resizeIcon(binding.customBottomNav.ivIconAccount, false)
+        }
+    }
+
+    private fun resizeIcon(icon: ImageView, isActive: Boolean) {
+        val size = if (isActive) {
+            resources.getDimensionPixelSize(R.dimen.active_icon_size)
+        } else {
+            resources.getDimensionPixelSize(R.dimen.inactive_icon_size)
+        }
+        icon.layoutParams = icon.layoutParams.apply {
+            width = size
+            height = size
+        }
+    }
+
+    private fun animateNavItem(view: View) {
+        YoYo.with(Techniques.Bounce)
+            .duration(700)
+            .playOn(view)
+    }
 }
+
+
 
 
