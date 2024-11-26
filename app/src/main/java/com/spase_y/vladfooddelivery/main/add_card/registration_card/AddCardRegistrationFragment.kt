@@ -35,30 +35,35 @@ class AddCardRegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.etCardNumber.addTextChangedListener(object : TextWatcher{
-
             private var isUpdating = false
-            private val space = ' '
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if(isUpdating) return
+                if (isUpdating) return
 
-                val original = s.toString().replace("","")
-                val formatted = StringBuilder()
+                val inputText = s.toString().replace(" ","")
 
-                for(i in original.indices){
-                    if(i > 0 && i % 4 == 0){
-                        formatted.append(original[i])
-                    }
-                }
+                var firstPart = if (inputText.length >= 12) inputText.substring(0,12) else inputText
+                var secondPart = if (inputText.length > 12) inputText.substring(12) else ""
+
+
+                val formattedFirstPart = firstPart.chunked(4).joinToString (" ")
+
+
+                binding.tvPasswordHide.text = formattedFirstPart
+                binding.tvPasswordEnd.text = secondPart
+
                 isUpdating = true
-                binding.etCardNumber.setText(formatted.toString())
-                binding.etCardNumber.setSelection(formatted.length)
+                binding.etCardNumber.setText(formattedFirstPart + " " + secondPart)
+                binding.etCardNumber.setSelection(binding.etCardNumber.text.length)
                 isUpdating = false
             }
 
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+            }
+
         })
 
         setFocusChangeListener(binding.etCardNumber)

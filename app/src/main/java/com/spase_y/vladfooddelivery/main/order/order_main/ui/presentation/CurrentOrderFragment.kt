@@ -36,7 +36,6 @@ class CurrentOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireParentFragment() as MainAppFragment).hideNavigation()
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }

@@ -16,7 +16,7 @@ class LoginUserInteractorImpl(
     }
 
     override fun saveUserData(userNumber: String) {
-        saveUserData(userNumber)
+        repository.saveUserData(userNumber)
     }
 
     override fun logOutUse() {
