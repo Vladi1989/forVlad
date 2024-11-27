@@ -16,6 +16,7 @@ import android.text.TextWatcher
 import android.widget.EditText
 import androidx.core.widget.addTextChangedListener
 import com.spase_y.vladfooddelivery.R
+import okhttp3.internal.format
 
 
 class AddCardRegistrationFragment : Fragment() {
@@ -34,36 +35,70 @@ class AddCardRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.etCardNumber.addTextChangedListener(object : TextWatcher{
+        binding.etCardNumber.addTextChangedListener(object : TextWatcher {
+            // Флаг, чтобы избежать повторной обработки текста во время его изменения
             private var isUpdating = false
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            // Переменная для хранения длины текста до изменения
+            private var previousLength = 0
 
+            // Метод вызывается перед изменением текста в EditText
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Сохраняем текущую длину текста, чтобы позже сравнить её с новой длиной
+                previousLength = s?.length ?: 0
             }
 
+            // Метод вызывается во время изменения текста
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Если уже идёт обновление текста (isUpdating == true), выходим, чтобы не зациклиться
                 if (isUpdating) return
 
-                val inputText = s.toString().replace(" ","")
+                // Определяем текущую длину текста
+                val currentLength = s?.length ?: 0
+                // Сравниваем текущую длину текста с предыдущей
+                // Если длина увеличилась, значит пользователь добавил символы
+                // Если уменьшилась, значит пользователь удалил символы
+                val isAdding = currentLength > previousLength
 
-                var firstPart = if (inputText.length >= 12) inputText.substring(0,12) else inputText
-                var secondPart = if (inputText.length > 12) inputText.substring(12) else ""
+                // Убираем все пробелы из текста, чтобы подготовить его к форматированию
+                val inputText = s.toString().replace(" ", "")
 
+                // Разделяем текст на две части:
+                // - Первая часть: первые 12 символов (если их меньше 12, берём сколько есть)
+                val firstPart = if (inputText.length >= 12) inputText.substring(0, 12) else inputText
+                // - Вторая часть: символы после первых 12 (если их вообще нет, остаётся пустая строка)
+                val secondPart = if (inputText.length > 12) inputText.substring(12) else ""
 
-                val formattedFirstPart = firstPart.chunked(4).joinToString (" ")
+                // Форматируем первую часть: разбиваем её на группы по 4 символа и добавляем пробелы между группами
+                val formattedFirstPart = firstPart.chunked(4).joinToString(" ")
 
+                // Заменяем все цифры в первой части символом "•" для скрытия
+                val hiddenFirstPart = formattedFirstPart.replace(Regex("\\d"), "•")
 
-                binding.tvPasswordHide.text = formattedFirstPart
+                // Устанавливаем скрытый текст для TextView, который отображает скрытые символы
+                binding.tvPasswordHide.text = hiddenFirstPart
+                // Устанавливаем оставшийся текст для другого TextView
                 binding.tvPasswordEnd.text = secondPart
 
+                // Начинаем обновление текста (устанавливаем флаг, чтобы не вызвать зацикливание)
                 isUpdating = true
-                binding.etCardNumber.setText(formattedFirstPart + " " + secondPart)
-                binding.etCardNumber.setSelection(binding.etCardNumber.text.length)
+                // Устанавливаем новый текст в EditText, добавляя форматированную первую часть и оставшийся текст
+                binding.etCardNumber.setText(formattedFirstPart + if (secondPart.isNotEmpty()) " $secondPart" else "")
+
+                // Устанавливаем позицию курсора:
+                if (isAdding) {
+                    // Если пользователь добавляет символы, перемещаем курсор в конец текста
+                    binding.etCardNumber.setSelection(binding.etCardNumber.text.length)
+                } else {
+                    // Если пользователь удаляет символы, оставляем курсор на прежнем месте
+                    binding.etCardNumber.setSelection(start)
+                }
+
+                // Завершаем обновление текста (сбрасываем флаг)
                 isUpdating = false
             }
 
-            override fun afterTextChanged(s: Editable?) {
-            }
-
+            // Метод вызывается после изменения текста (можем здесь ничего не делать)
+            override fun afterTextChanged(s: Editable?) {}
         })
 
         setFocusChangeListener(binding.etCardNumber)
