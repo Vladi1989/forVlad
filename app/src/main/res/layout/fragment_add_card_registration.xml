@@ -151,6 +151,7 @@
                     android:textSize="18sp" />
 
                 <TextView
+                    android:id="@+id/tvDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/quicksand_bold"
@@ -166,7 +167,6 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView3"
         app:cardElevation="0dp"
-
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="28dp"
@@ -203,17 +203,17 @@
                 android:layout_marginEnd="8dp"
                 android:textColor="@color/white"
                 android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView24"
-                app:layout_constraintEnd_toStartOf="@+id/textView24"
-                app:layout_constraintTop_toTopOf="@+id/textView24" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvCvv"
+                app:layout_constraintEnd_toStartOf="@+id/tvCvv"
+                app:layout_constraintTop_toTopOf="@+id/tvCvv" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/tvCvv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/quicksand_bold"
-                android:text="08/29"
+                android:text="029"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -329,7 +329,7 @@
                 android:text="Security code"
                 android:textColor="@color/text1"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/etAddCountry3"
+                app:layout_constraintStart_toStartOf="@+id/etAddCvv"
                 app:layout_constraintTop_toBottomOf="@+id/etCardHolderName" />
 
             <EditText
@@ -340,6 +340,7 @@
                 android:background="@drawable/button_shape_stroke_gray"
                 android:hint="01.0927"
                 android:inputType="date"
+                android:maxLength="5"
                 android:padding="16dp"
                 android:textColor="@color/text1"
                 android:textColorHint="@color/text4"
@@ -348,7 +349,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
             <EditText
-                android:id="@+id/etAddCountry3"
+                android:id="@+id/etAddCvv"
                 android:layout_width="161dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -356,6 +357,7 @@
                 android:hint=""
                 android:inputType="number"
                 android:padding="16dp"
+                android:maxLength="3"
                 android:textColor="@color/text1"
                 android:textColorHint="@color/text4"
                 android:textSize="16dp"

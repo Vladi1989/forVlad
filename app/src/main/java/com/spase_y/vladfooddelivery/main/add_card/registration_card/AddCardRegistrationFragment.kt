@@ -95,10 +95,68 @@ class AddCardRegistrationFragment : Fragment() {
 
                 // Завершаем обновление текста (сбрасываем флаг)
                 isUpdating = false
+                if(inputText.length == 16){
+                    binding.etCardHolderName.requestFocus()
+                }
             }
 
             // Метод вызывается после изменения текста (можем здесь ничего не делать)
             override fun afterTextChanged(s: Editable?) {}
+        })
+
+        binding.etDate.addTextChangedListener(object :TextWatcher{
+            private var isUpdating = false
+            private var previousText = ""
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                previousText = s.toString()
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if(isUpdating) return
+
+                val currentText = s.toString()
+                val isDeleting = before > count
+
+                if(isDeleting){
+                    return
+                }
+
+                val cleanInput = currentText.replace("/", "")
+
+                // Формируем строку в формате MM/YY
+                val formattedText = StringBuilder()
+                for (i in cleanInput.indices) {
+                    if (i == 2) formattedText.append("/") // Добавляем слэш после двух цифр
+                    formattedText.append(cleanInput[i])
+                }
+
+                isUpdating = true
+                binding.etDate.setText(formattedText.toString())
+                binding.etDate.setSelection(formattedText.length)
+                isUpdating = false
+            }
+            override fun afterTextChanged(s: Editable?) {
+                if (isUpdating) return // Если сейчас идёт обновление, пропускаем
+
+                // Синхронизируем tvDate с уже отформатированным текстом
+                binding.tvDate.text = binding.etDate.text.toString()
+
+                // Переводим фокус на etAddCountry3, если длина текста достигла 5 символов
+                if (binding.etDate.text.length == 5) {
+                    binding.etAddCvv.requestFocus()
+                }
+            }
+
+        })
+
+        binding.etAddCvv.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.tvCvv.text = s?.toString()
+            }
+            override fun afterTextChanged(s: Editable?) {}
+
         })
 
         setFocusChangeListener(binding.etCardNumber)
@@ -117,12 +175,12 @@ class AddCardRegistrationFragment : Fragment() {
             flipCard(binding.cardView2,binding.cardView3)
         }
         // Слушатель фокуса для etAddCountry3
-        binding.etAddCountry3.setOnFocusChangeListener { _, hasFocus ->
+        binding.etAddCvv.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.etAddCountry3.setBackgroundResource(R.drawable.button_shape_stroke)
+                binding.etAddCvv.setBackgroundResource(R.drawable.button_shape_stroke)
                 flipCard(binding.cardView3, binding.cardView2)
             } else {
-                binding.etAddCountry3.setBackgroundResource(R.drawable.button_shape_stroke_gray)
+                binding.etAddCvv.setBackgroundResource(R.drawable.button_shape_stroke_gray)
                 flipCard(binding.cardView2, binding.cardView3)
             }
         }
