@@ -35,6 +35,8 @@ class AddCardRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkFieldsAndEnableButton()
+
         binding.etCardNumber.addTextChangedListener(object : TextWatcher {
             // Флаг, чтобы избежать повторной обработки текста во время его изменения
             private var isUpdating = false
@@ -101,7 +103,9 @@ class AddCardRegistrationFragment : Fragment() {
             }
 
             // Метод вызывается после изменения текста (можем здесь ничего не делать)
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+                checkFieldsAndEnableButton()
+            }
         })
 
         binding.etDate.addTextChangedListener(object :TextWatcher{
@@ -145,6 +149,20 @@ class AddCardRegistrationFragment : Fragment() {
                 if (binding.etDate.text.length == 5) {
                     binding.etAddCvv.requestFocus()
                 }
+                checkFieldsAndEnableButton()
+            }
+
+        })
+
+        binding.etCardHolderName.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.tvCardHolderName.text = s?.toString()
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                checkFieldsAndEnableButton()
             }
 
         })
@@ -155,7 +173,9 @@ class AddCardRegistrationFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.tvCvv.text = s?.toString()
             }
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: Editable?) {
+                checkFieldsAndEnableButton()
+            }
 
         })
 
@@ -200,6 +220,19 @@ class AddCardRegistrationFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun checkFieldsAndEnableButton(){
+        val isCardNumberFull = binding.etCardNumber.text.toString().length == 19
+        val isCardNameFull = binding.etCardHolderName.text.isNotEmpty()
+        val isCardDate = binding.etDate.text.toString().length == 5
+        val isCardCvv = binding.etAddCvv.text.toString().length == 3
+
+        val allFieldsIsFull = isCardNumberFull && isCardNameFull && isCardDate && isCardCvv
+
+        binding.btnSave.isEnabled = allFieldsIsFull
+        binding.btnSave.alpha = if (allFieldsIsFull) 1f else 0.7f
+
     }
 
     private fun flipCard(toShow: View, toHide: View) {
