@@ -14,6 +14,7 @@ import android.animation.ObjectAnimator
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.spase_y.vladfooddelivery.R
 import okhttp3.internal.format
@@ -36,6 +37,12 @@ class AddCardRegistrationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         checkFieldsAndEnableButton()
+
+        binding.btnSave.setOnClickListener {
+            if(binding.btnSave.isEnabled){
+                Toast.makeText(requireContext(), "Карта добавлена", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         binding.etCardNumber.addTextChangedListener(object : TextWatcher {
             // Флаг, чтобы избежать повторной обработки текста во время его изменения
