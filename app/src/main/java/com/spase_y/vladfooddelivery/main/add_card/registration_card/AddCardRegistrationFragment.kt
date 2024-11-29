@@ -1,28 +1,31 @@
 package com.spase_y.vladfooddelivery.main.add_card.registration_card
 
-import android.os.Bundle
-
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.spase_y.vladfooddelivery.databinding.FragmentAddCardRegistrationBinding
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.spase_y.vladfooddelivery.R
-import okhttp3.internal.format
+import com.spase_y.vladfooddelivery.databinding.FragmentAddCardRegistrationBinding
+import com.spase_y.vladfooddelivery.main.add_card.add_card.data.model.Card
+import com.spase_y.vladfooddelivery.main.add_card.add_card.ui.view_model.CardViewModel
+import org.koin.android.ext.android.inject
 
 
 class AddCardRegistrationFragment : Fragment() {
+
     private var _binding: FragmentAddCardRegistrationBinding? = null
     private val binding get() = _binding!!
+    private lateinit var cardViewModel: CardViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +39,7 @@ class AddCardRegistrationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
@@ -44,7 +48,18 @@ class AddCardRegistrationFragment : Fragment() {
 
         binding.btnSave.setOnClickListener {
             if(binding.btnSave.isEnabled){
+                val card = Card(
+                    cardNumber = binding.etCardNumber.text.toString().replace(" ", ""),
+                    cardHolderName = binding.etCardHolderName.text.toString(),
+                    expiryDate = binding.etDate.text.toString(),
+                    cvv = binding.etAddCvv.text.toString()
+                )
+
+                cardViewModel.addCards(card) // Сохраняем карту в ViewModel
                 Toast.makeText(requireContext(), "Карта добавлена", Toast.LENGTH_SHORT).show()
+
+                // Закрываем фрагмент
+                parentFragmentManager.popBackStack()
             }
         }
 

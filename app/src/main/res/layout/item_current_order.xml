@@ -96,9 +96,9 @@
             android:text="1"
             android:textColor="@color/text2"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ivDeleteFood"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMinusFood"
             app:layout_constraintEnd_toStartOf="@+id/ivAddFood"
-            app:layout_constraintTop_toTopOf="@+id/ivDeleteFood" />
+            app:layout_constraintTop_toTopOf="@+id/ivMinusFood" />
 
         <ImageView
             android:id="@+id/ivAddFood"
@@ -106,9 +106,9 @@
             android:layout_height="22dp"
             android:layout_marginEnd="50dp"
             android:src="@drawable/plus"
-            app:layout_constraintBottom_toBottomOf="@+id/ivDeleteFood"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMinusFood"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ivDeleteFood" />
+            app:layout_constraintTop_toTopOf="@+id/ivMinusFood" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
