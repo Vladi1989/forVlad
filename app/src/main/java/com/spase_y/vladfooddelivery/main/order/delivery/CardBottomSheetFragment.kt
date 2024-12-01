@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentCardPaymentBottomSheetBinding
-import com.spase_y.vladfooddelivery.main.add_card.add_card.AddCardFragment
+import com.spase_y.vladfooddelivery.main.add_card.add_card.ui.presentation.ListOfCardsFragment
 
 
 class CardBottomSheetFragment : BottomSheetDialogFragment() {
@@ -32,7 +32,7 @@ class CardBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fcvMainApp, AddCardFragment())
+                .replace(R.id.fcvMainApp, ListOfCardsFragment())
                 .addToBackStack(null)
                 .commit()
         }

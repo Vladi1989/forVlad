@@ -55,7 +55,7 @@ class AddCardRegistrationFragment : Fragment() {
                     cvv = binding.etAddCvv.text.toString()
                 )
 
-                cardViewModel.addCards(card) // Сохраняем карту в ViewModel
+                cardViewModel.addCard(card) // Сохраняем карту в ViewModel
                 Toast.makeText(requireContext(), "Карта добавлена", Toast.LENGTH_SHORT).show()
 
                 // Закрываем фрагмент

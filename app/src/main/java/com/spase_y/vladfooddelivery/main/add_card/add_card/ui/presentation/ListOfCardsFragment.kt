@@ -1,4 +1,4 @@
-package com.spase_y.vladfooddelivery.main.add_card.add_card
+package com.spase_y.vladfooddelivery.main.add_card.add_card.ui.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,7 +16,7 @@ import com.spase_y.vladfooddelivery.main.add_card.registration_card.AddCardRegis
 import org.koin.android.ext.android.inject
 
 
-class AddCardFragment : Fragment() {
+class ListOfCardsFragment : Fragment() {
     private val vm by inject<CardViewModel>()
     private var _binding: FragmentAddCardBinding? = null
     private val binding get() = _binding!!
@@ -27,7 +27,7 @@ class AddCardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentAddCardBinding.inflate(inflater,container,false)
+        _binding = FragmentAddCardBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -39,10 +39,9 @@ class AddCardFragment : Fragment() {
         }
         binding.btnAddToCart.setOnClickListener {
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fcvMainApp,AddCardRegistrationFragment())
+                .replace(R.id.fcvMainApp, AddCardRegistrationFragment())
                 .addToBackStack(null)
                 .commit()
-
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
         cardAdapter = CardAdapter()
@@ -54,11 +53,13 @@ class AddCardFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.recyclerView.visibility = View.GONE
                 }
+
                 is CardScreenState.Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.VISIBLE
                     cardAdapter.submitList(state.list)
                 }
+
                 is CardScreenState.Error -> {
                     binding.progressBar.visibility = View.GONE
                     binding.recyclerView.visibility = View.GONE
@@ -66,10 +67,7 @@ class AddCardFragment : Fragment() {
                 }
             }
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        vm.loadCards()
     }
 }

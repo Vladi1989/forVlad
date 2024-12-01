@@ -6,9 +6,7 @@ import com.spase_y.vladfooddelivery.main.add_card.add_card.domain.api.CardReposi
 
 class CardInteractorImpl(
     private val cardRepository: CardRepository
-): CardInteractor {
-
-    private val cardList = mutableListOf<Card>()
+) : CardInteractor {
 
     override fun addCard(card: Card) {
         cardRepository.addCard(card)
