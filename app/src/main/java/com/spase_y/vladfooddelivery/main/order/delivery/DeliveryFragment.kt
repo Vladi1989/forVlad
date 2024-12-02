@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentDeliveryBinding
 import com.spase_y.vladfooddelivery.main.order.add_address.AddAddressFragment
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 
 
 class DeliveryFragment : Fragment() {
@@ -20,12 +21,12 @@ class DeliveryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDeliveryBinding.inflate(inflater,container,false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainAppFragment.getInstance().hideNavigation()
 
         binding.clAddShippingMethod.setOnClickListener {
             val bottomDelivery = DeliveryBottomSheetFragment()

@@ -38,7 +38,7 @@ class MainAppFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        instance = this
         replaceFragment(MenuFragment())
         setActiveNavIcon(R.id.ll_nav_home)
 
@@ -161,6 +161,12 @@ class MainAppFragment : Fragment() {
         YoYo.with(Techniques.Bounce)
             .duration(700)
             .playOn(view)
+    }
+    companion object {
+        private var instance: MainAppFragment? = null
+        fun getInstance(): MainAppFragment {
+            return instance!!
+        }
     }
 }
 

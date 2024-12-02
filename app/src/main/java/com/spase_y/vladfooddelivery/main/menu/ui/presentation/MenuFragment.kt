@@ -25,6 +25,7 @@ import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter
 import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import org.koin.android.ext.android.inject
 import kotlin.collections.ArrayList
 
@@ -93,12 +94,16 @@ class MenuFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMenuBinding.inflate(inflater, container, false)
-        viewPager2 = binding.imageSlider
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewPager2 = binding.imageSlider
+
+        MainAppFragment.getInstance().showNavigation()
+
         vm.getMenuLd().observe(viewLifecycleOwner){
             when(it){
                 is MenuScreenState.Loading -> {

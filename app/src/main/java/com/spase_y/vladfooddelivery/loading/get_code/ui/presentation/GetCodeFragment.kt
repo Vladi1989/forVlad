@@ -24,7 +24,6 @@ class GetCodeFragment : Fragment() {
         FragmentGetCodeBinding.inflate(layoutInflater)
     }
     private val vm: GetCodeViewModel by viewModel()
-
     private lateinit var validCode:String
     private lateinit var phoneNumber:String
 

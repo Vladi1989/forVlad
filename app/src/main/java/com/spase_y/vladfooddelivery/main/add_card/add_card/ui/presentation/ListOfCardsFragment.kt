@@ -13,6 +13,7 @@ import com.spase_y.vladfooddelivery.main.add_card.add_card.ui.adapter.CardAdapte
 import com.spase_y.vladfooddelivery.main.add_card.add_card.ui.model.CardScreenState
 import com.spase_y.vladfooddelivery.main.add_card.add_card.ui.view_model.CardViewModel
 import com.spase_y.vladfooddelivery.main.add_card.registration_card.AddCardRegistrationFragment
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import org.koin.android.ext.android.inject
 
 
@@ -33,6 +34,7 @@ class ListOfCardsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainAppFragment.getInstance().hideNavigation()
 
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

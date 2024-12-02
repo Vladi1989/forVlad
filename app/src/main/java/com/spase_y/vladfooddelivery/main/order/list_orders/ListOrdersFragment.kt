@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentListOrdersBinding
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 
 
 class ListOrdersFragment : Fragment() {
@@ -20,6 +21,11 @@ class ListOrdersFragment : Fragment() {
     ): View? {
         _binding = FragmentListOrdersBinding.inflate(inflater,container,false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        MainAppFragment.getInstance().showNavigation()
     }
 
     override fun onDestroyView() {

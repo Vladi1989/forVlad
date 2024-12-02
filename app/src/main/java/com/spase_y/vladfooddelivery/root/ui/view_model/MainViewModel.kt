@@ -32,7 +32,7 @@ class MainViewModel(
 
 
     fun saveUserNumber() {
-        return loginUserInteractor.saveUserData(userNumber)
+        loginUserInteractor.saveUserData(userNumber)
     }
     fun setNumber(value: String){
         userNumber = value

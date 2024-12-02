@@ -10,6 +10,7 @@ import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAddAddressBinding
 import com.spase_y.vladfooddelivery.main.add_card.registration_card.AddCardRegistrationFragment
 import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 
 
 class AddAddressFragment : Fragment() {
@@ -26,6 +27,7 @@ class AddAddressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainAppFragment.getInstance().hideNavigation()
         binding.ivArrowBack3.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }

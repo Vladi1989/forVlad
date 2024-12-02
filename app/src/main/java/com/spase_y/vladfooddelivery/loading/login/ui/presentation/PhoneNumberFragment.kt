@@ -19,6 +19,7 @@ import com.spase_y.vladfooddelivery.root.ui.presentation.MainActivity
 class PhoneNumberFragment : Fragment() {
     private val binding by lazy {
         FragmentPhoneNumberBinding.inflate(layoutInflater)
+
     }
 
     override fun onCreateView(
@@ -27,10 +28,12 @@ class PhoneNumberFragment : Fragment() {
     ): View? {
         return binding.root
     }
+
     val vm = PhoneNumberViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         binding.ivArrowBack1.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()

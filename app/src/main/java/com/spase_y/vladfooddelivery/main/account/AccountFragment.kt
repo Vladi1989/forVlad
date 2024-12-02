@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAccountBinding
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import com.spase_y.vladfooddelivery.root.theme.domain.api.ThemeInteractor
 import org.koin.android.ext.android.inject
 
@@ -28,6 +29,7 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainAppFragment.getInstance().showNavigation()
         binding.cvHelpOff.setOnClickListener {
             binding.cvHelpOff.visibility = View.GONE
             binding.cvHelpOn.visibility = View.VISIBLE

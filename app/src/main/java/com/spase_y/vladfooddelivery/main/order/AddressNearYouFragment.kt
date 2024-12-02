@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentAddressNearYouBinding
 import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
+import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 
 
 class AddressNearYouFragment : Fragment() {
@@ -25,6 +26,7 @@ class AddressNearYouFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MainAppFragment.getInstance().hideNavigation()
         binding.btnSave.setOnClickListener {
             requireActivity().supportFragmentManager
                 .beginTransaction()

@@ -30,6 +30,7 @@ class SetUpProfileFragment : Fragment() {
     ): View? {
         return binding.root
     }
+
     val vm = SetupProfileViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
