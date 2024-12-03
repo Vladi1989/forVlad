@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import com.spase_y.vladfooddelivery.R
+import com.spase_y.vladfooddelivery.core.applyTheme
 import com.spase_y.vladfooddelivery.databinding.FragmentAccountBinding
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import com.spase_y.vladfooddelivery.root.theme.domain.api.ThemeInteractor
@@ -60,27 +61,16 @@ class AccountFragment : Fragment() {
             binding.ivSwitchOff.visibility = View.VISIBLE
             binding.ivSwitchOn.visibility = View.GONE
             themeInteractor.changeCurrentTheme()
-            applyTheme()
+            requireActivity().applyTheme(themeInteractor)
         }
 
         binding.ivSwitchOff.setOnClickListener {
             binding.ivSwitchOff.visibility = View.GONE
             binding.ivSwitchOn.visibility = View.VISIBLE
             themeInteractor.changeCurrentTheme()
-            applyTheme()
+            requireActivity().applyTheme(themeInteractor)
         }
     }
-    private fun applyTheme() {
-
-        val currentTheme = themeInteractor.getCurrentTheme()
-        requireActivity().window.apply {
-            decorView.setBackgroundColor(
-                if (currentTheme == ThemeInteractor.ApplicationTheme.DAY) Color.WHITE
-                else Color.BLACK
-            )
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

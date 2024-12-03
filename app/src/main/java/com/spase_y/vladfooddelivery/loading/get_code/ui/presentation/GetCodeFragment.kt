@@ -3,6 +3,7 @@ package com.spase_y.vladfooddelivery.loading.get_code.ui.presentation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentGetCodeBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.model.GetCodeScreenState
@@ -42,10 +44,14 @@ class GetCodeFragment : Fragment() {
         if(validCode.isNullOrEmpty()){
             Toast.makeText(requireContext(), "Что-то пошло не так", Toast.LENGTH_SHORT).show()
             return
-        } 
-        binding.ivArrowBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
+        binding.ivArrowBack.setOnClickListener {
+            Log.d("GetCodeFragment", "Before popBackStack, count: ${parentFragmentManager.backStackEntryCount}")
+            parentFragmentManager.popBackStack()
+            Log.d("GetCodeFragment", "After popBackStack, count: ${parentFragmentManager.backStackEntryCount}")
+        }
+
         setupEditTexts()
         setupFocusChangeListeners()
         setupObserver()

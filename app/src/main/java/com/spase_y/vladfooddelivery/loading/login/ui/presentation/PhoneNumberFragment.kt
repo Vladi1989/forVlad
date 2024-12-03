@@ -34,12 +34,13 @@ class PhoneNumberFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         binding.ivArrowBack1.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            parentFragmentManager.popBackStack()
         }
-        binding.etPhoneNumber.onFocusChangeListener = View.OnFocusChangeListener{_,hasFocus ->
-            if(hasFocus){
+
+
+        binding.etPhoneNumber.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
                 binding.etPhoneNumber.setBackgroundResource(R.drawable.button_shape_stroke)
             } else {
                 binding.etPhoneNumber.setBackgroundResource(R.drawable.button_shape_stroke_gray)
@@ -48,7 +49,7 @@ class PhoneNumberFragment : Fragment() {
 
 
         binding.etPhoneNumber.doOnTextChanged { text, start, before, count ->
-            if (!text.toString().contains("+")){
+            if (!text.toString().contains("+")) {
                 binding.etPhoneNumber.setText("+$text")
                 binding.etPhoneNumber.setSelection(binding.etPhoneNumber.text.length)
             }
@@ -65,35 +66,39 @@ class PhoneNumberFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        vm.screenStateLD.observe(viewLifecycleOwner){
-            when(it){
+        vm.screenStateLD.observe(viewLifecycleOwner) {
+            when (it) {
                 is PhoneNumberScreenState.CanGoNext -> {
                     binding.btnSendCode.alpha = 1f
                     binding.btnSendCode.isEnabled = true
-                    Log.d("TAG1","CanGoNext")
+                    Log.d("TAG1", "CanGoNext")
                 }
+
                 is PhoneNumberScreenState.CantGoNext -> {
                     binding.btnSendCode.alpha = 0.7f
                     binding.btnSendCode.isEnabled = false
-                    Log.d("TAG1","CantGoNext")
+                    Log.d("TAG1", "CantGoNext")
                 }
+
                 is PhoneNumberScreenState.Loading -> {
                     binding.btnSendCode.alpha = 0.7f
                     binding.btnSendCode.isEnabled = false
                     binding.pbLoading.visibility = View.VISIBLE
-                    Log.d("TAG1","Loading")
+                    Log.d("TAG1", "Loading")
                 }
+
                 is PhoneNumberScreenState.Error -> {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
                     binding.btnSendCode.alpha = 1f
                     binding.btnSendCode.isEnabled = true
-                    Log.d("TAG1","Error")
+                    Log.d("TAG1", "Error")
 
 
                 }
+
                 is PhoneNumberScreenState.Result -> {
-                    Log.d("TAG1","Result")
+                    Log.d("TAG1", "Result")
 
                     binding.pbLoading.visibility = View.GONE
                     openEnterCodeFragment(it.result)
@@ -101,18 +106,19 @@ class PhoneNumberFragment : Fragment() {
             }
         }
     }
-    
+
     fun openEnterCodeFragment(result: String) {
         val getCodeFragment = GetCodeFragment()
         val newArguments = Bundle()
-        newArguments.putString(GET_CODE_TAG,result)
+        newArguments.putString(GET_CODE_TAG, result)
         getCodeFragment.arguments = newArguments
         parentFragmentManager.beginTransaction()
             .replace(R.id.main, getCodeFragment)
             .addToBackStack(null)
             .commit()
     }
-    companion object{
+
+    companion object {
         const val GET_CODE_TAG = "GET_CODE_TAG"
     }
 }

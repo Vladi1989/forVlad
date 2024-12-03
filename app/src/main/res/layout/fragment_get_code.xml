@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loading.login.ui.presentation.PhoneNumberFragment">
+    tools:context=".loading.get_code.ui.presentation.GetCodeFragment">
 
 
     <ImageView
