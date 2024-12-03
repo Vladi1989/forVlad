@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.api.OrdersRepository
+import com.spase_y.vladfooddelivery.root.Constants.CURRENT_ALL_LIST
 
 class OrdersRepositoryImpl(
     private val sharedPreferences: SharedPreferences,
@@ -37,9 +38,5 @@ class OrdersRepositoryImpl(
             val list = gson.fromJson<List<MenuItem>>(listStr,type)
             return list
         }
-    }
-
-    companion object{
-        const val CURRENT_ALL_LIST = "CURRENT_ALL_LIST"
     }
 }

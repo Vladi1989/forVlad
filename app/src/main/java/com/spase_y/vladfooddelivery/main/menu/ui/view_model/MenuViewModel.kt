@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.api.OrdersInteractor
 import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
+import com.spase_y.vladfooddelivery.root.Constants.MAX_COUNT_ITEMS_TO_ORDER
 
 class MenuViewModel(
     private val ordersInteractor: OrdersInteractor
@@ -25,8 +26,5 @@ class MenuViewModel(
     }
     fun clearMenuLD(){
         menuLd.postValue(null)
-    }
-    companion object{
-        const val MAX_COUNT_ITEMS_TO_ORDER = 20
     }
 }

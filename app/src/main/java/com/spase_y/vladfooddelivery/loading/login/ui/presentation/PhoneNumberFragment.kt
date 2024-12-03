@@ -13,6 +13,7 @@ import com.spase_y.vladfooddelivery.databinding.FragmentPhoneNumberBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.presentation.GetCodeFragment
 import com.spase_y.vladfooddelivery.loading.login.ui.model.PhoneNumberScreenState
 import com.spase_y.vladfooddelivery.loading.login.ui.view_model.PhoneNumberViewModel
+import com.spase_y.vladfooddelivery.root.Constants.GET_CODE_TAG
 import com.spase_y.vladfooddelivery.root.ui.presentation.MainActivity
 
 
@@ -116,9 +117,5 @@ class PhoneNumberFragment : Fragment() {
             .replace(R.id.main, getCodeFragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    companion object {
-        const val GET_CODE_TAG = "GET_CODE_TAG"
     }
 }

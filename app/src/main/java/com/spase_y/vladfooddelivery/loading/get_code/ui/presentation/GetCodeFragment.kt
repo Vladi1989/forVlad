@@ -16,8 +16,8 @@ import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentGetCodeBinding
 import com.spase_y.vladfooddelivery.loading.get_code.ui.model.GetCodeScreenState
 import com.spase_y.vladfooddelivery.loading.get_code.ui.view_model.GetCodeViewModel
-import com.spase_y.vladfooddelivery.loading.login.ui.presentation.PhoneNumberFragment.Companion.GET_CODE_TAG
 import com.spase_y.vladfooddelivery.loading.result.FinalRegistrationFragment
+import com.spase_y.vladfooddelivery.root.Constants.GET_CODE_TAG
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 

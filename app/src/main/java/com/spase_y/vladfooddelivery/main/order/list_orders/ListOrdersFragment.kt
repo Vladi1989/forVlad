@@ -32,6 +32,4 @@ class ListOrdersFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
