@@ -13,7 +13,20 @@ class OrdersRepositoryImpl(
 ): OrdersRepository {
     override fun addItem(item: MenuItem) {
         val currentList = getAllList().toMutableList()
-        currentList.add(item)
+
+        // Ищем элемент с таким же названием.
+        val existingItem = currentList.find { it.name == item.name }
+
+        if (existingItem != null) {
+            // Если элемент найден, увеличиваем количество.
+            val updatedItem = existingItem.copy(quantity = existingItem.quantity + 1)
+            val index = currentList.indexOf(existingItem)
+            currentList[index] = updatedItem
+        } else {
+            // Если элемента нет, добавляем новый.
+            currentList.add(item)
+        }
+
         val result = gson.toJson(currentList)
         sharedPreferences.edit().putString(CURRENT_ALL_LIST,result).apply()
     }
@@ -37,6 +50,16 @@ class OrdersRepositoryImpl(
             val type = object : TypeToken<List<MenuItem>>(){}.type
             val list = gson.fromJson<List<MenuItem>>(listStr,type)
             return list
+        }
+    }
+
+    override fun replaceItem(oldItem: MenuItem, newItem: MenuItem) {
+        val currentList = getAllList().toMutableList()
+        val index = currentList.indexOfFirst { it == oldItem }
+        if (index != -1){
+            currentList[index] = newItem
+            val result = gson.toJson(currentList)
+            sharedPreferences.edit().putString(CURRENT_ALL_LIST,result).apply()
         }
     }
 }

@@ -5,16 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.spase_y.vladfooddelivery.loading.login.data.model.CodeModel
 import com.spase_y.vladfooddelivery.loading.login.ui.model.PhoneNumberScreenState
+import com.spase_y.vladfooddelivery.root.Constants
+import com.spase_y.vladfooddelivery.root.Constants.GET_CODE_URL
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.Dispatcher
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.Response
 import java.io.IOException
 
@@ -34,7 +33,7 @@ class PhoneNumberViewModel {
         screenStateLD.postValue(PhoneNumberScreenState.Result("1234"))
 
         val request = Request.Builder()
-            .url("https://raw.githubusercontent.com/Vlad21anon/bgResponse/main/get_code2")
+            .url(GET_CODE_URL)
             .build()
         CoroutineScope(Dispatchers.IO).launch {
             okHttpClient.newCall(request).enqueue(object :Callback{

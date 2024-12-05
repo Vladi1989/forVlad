@@ -3,25 +3,26 @@ package com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.spase_y.vladfooddelivery.Item
 import com.spase_y.vladfooddelivery.databinding.ItemMenuBinding
 import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 
 class MenuAdapter(
-    private val menuItems: List<MenuItem>,
+    private val menuItems: List<Item>,
     private val listener: OnItemClickListener,
-    private val onAddClick: (MenuItem)-> Unit
+    private val onAddClick: (Item)-> Unit
 ) :RecyclerView.Adapter<MenuAdapter.MenuAdapterViewHolder>(){
 
     interface OnItemClickListener {
-        fun onItemClick(item:MenuItem)
+        fun onItemClick(item:Item)
     }
 
     inner class MenuAdapterViewHolder(val binding: ItemMenuBinding):RecyclerView.ViewHolder(binding.root){
-        fun bind(item:MenuItem){
-            binding.imageView8.setImageResource(item.imageRes)
-            binding.productName.text = item.name
-            binding.productTitle.text = item.description
-            binding.productPrice.text = "\$ ${item.price}"
+        fun bind(item:Item){
+            binding.imageView8.setImageResource(item.item_image)
+            binding.productName.text = item.item_name
+            binding.productTitle.text = item.item_description
+            binding.productPrice.text = "\$ ${item.item_price}"
             binding.btnAdd.setOnClickListener {
                 onAddClick.invoke(item)
             }

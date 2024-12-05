@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.spase_y.vladfooddelivery.databinding.ItemAddCardBinding
 import com.spase_y.vladfooddelivery.main.add_card.add_card.data.model.Card
 
-class CardAdapter : ListAdapter<Card, CardAdapter.CardViewHolder>(CardDiffCallback()) {
+class CardAdapter(
+    private val onCardClick: (Card) -> Unit
+) : ListAdapter<Card, CardAdapter.CardViewHolder>(CardDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val binding = ItemAddCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -16,7 +18,9 @@ class CardAdapter : ListAdapter<Card, CardAdapter.CardViewHolder>(CardDiffCallba
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val card = getItem(position)
+        holder.bind(card)
+        holder.itemView.setOnClickListener{ onCardClick(card)}
     }
 
     class CardViewHolder(private val binding: ItemAddCardBinding) : RecyclerView.ViewHolder(binding.root) {

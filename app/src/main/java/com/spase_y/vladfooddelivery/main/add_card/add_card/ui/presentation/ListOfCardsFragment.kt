@@ -46,7 +46,10 @@ class ListOfCardsFragment : Fragment() {
                 .commit()
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(context)
-        cardAdapter = CardAdapter()
+        cardAdapter = CardAdapter { card ->
+            Toast.makeText(context, "Клик по карте: ${card.cardHolderName}", Toast.LENGTH_SHORT).show()
+        }
+
         binding.recyclerView.adapter = cardAdapter
 
         vm.cardsLd.observe(viewLifecycleOwner) { state ->

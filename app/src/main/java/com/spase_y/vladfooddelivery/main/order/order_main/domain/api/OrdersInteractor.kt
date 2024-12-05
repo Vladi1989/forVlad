@@ -7,4 +7,5 @@ interface OrdersInteractor {
     fun removeItem(item:MenuItem)
     fun clearAllList()
     fun getAllList():List<MenuItem>
+    fun replaceItem(oldItem: MenuItem,newItem: MenuItem)
 }

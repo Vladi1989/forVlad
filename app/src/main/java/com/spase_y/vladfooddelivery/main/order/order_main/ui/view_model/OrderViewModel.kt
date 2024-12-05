@@ -19,6 +19,6 @@ class OrderViewModel (
     }
 
     fun updateItem(oldMenuItem: MenuItem, newMenuItem: MenuItem) {
-
+        ordersInteractor.replaceItem(oldMenuItem,newMenuItem)
     }
 }

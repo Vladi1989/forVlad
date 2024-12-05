@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.gson.Gson
+import com.spase_y.vladfooddelivery.Item
+import com.spase_y.vladfooddelivery.MenuResponse
+import com.spase_y.vladfooddelivery.NetworkClient
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.FragmentMenuBinding
@@ -26,6 +30,7 @@ import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
+import com.spase_y.vladfooddelivery.root.Constants.GET_URL_FROM_BACK
 import org.koin.android.ext.android.inject
 import kotlin.collections.ArrayList
 
@@ -48,6 +53,7 @@ class MenuFragment : Fragment() {
     private lateinit var menuAdapter: MenuAdapter
 
 
+    private val networkClient = NetworkClient()
     private val recommendItems = listOf(
         MenuItem(
             R.drawable.icon_item_menu,
@@ -62,32 +68,7 @@ class MenuFragment : Fragment() {
             3.29f
         ),
     )
-    private val menuItems = listOf(
-        MenuItem(
-            R.drawable.icon_item_menu,
-            "Pepperoni Pizza",
-            "Tomato sauce, mozzarella, pepperoni.",
-            14.99f
-        ),
-        MenuItem(
-            R.drawable.icon_item_menu,
-            "Veggie Pizza",
-            "Tomato sauce, mozzarella, peppers, onions, olives.",
-            12.49f
-        ),
-        MenuItem(
-            R.drawable.icon_item_menu,
-            "Pepperoni Pizza",
-            "Tomato sauce, mozzarella, pepperoni.",
-            14.99f
-        ),
-        MenuItem(
-            R.drawable.icon_item_menu,
-            "Veggie Pizza",
-            "Tomato sauce, mozzarella, peppers, onions, olives.",
-            12.49f
-        )
-    )
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,6 +80,8 @@ class MenuFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setUpMenuRecyclerViews()
 
         viewPager2 = binding.imageSlider
 
@@ -145,9 +128,75 @@ class MenuFragment : Fragment() {
             }
 
         })
-        setUpMenuRecyclerViews()
+        // Настройка RecyclerView
+        setupRecyclerView()
+
+        // Выполнение сетевого запроса
+        fetchMenuItems()
     }
 
+    private fun setupRecyclerView() {
+        menuAdapter = MenuAdapter(
+            menuItems = emptyList(),
+            listener = object : MenuAdapter.OnItemClickListener {
+                override fun onItemClick(item: Item) {
+                    Toast.makeText(requireContext(), "Clicked: ${item.item_name}", Toast.LENGTH_SHORT).show()
+                }
+            },
+            onAddClick = { item ->
+                Toast.makeText(requireContext(), "Added: ${item.item_name}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        binding.rvMenu.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = menuAdapter
+        }
+    }
+
+    private fun fetchMenuItems() {
+        val url = GET_URL_FROM_BACK
+
+        networkClient.makeRequestAsync(
+            url,
+            onSuccess = { response ->
+                requireActivity().runOnUiThread {
+                    val items = parseMenuResponse(response)
+                    menuAdapter = MenuAdapter(
+                        menuItems = items,
+                        listener = object : MenuAdapter.OnItemClickListener {
+                            override fun onItemClick(item: Item) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Clicked: ${item.item_name}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        },
+                        onAddClick = { item ->
+                            Toast.makeText(
+                                requireContext(),
+                                "Added: ${item.item_name}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    )
+                    binding.rvMenu.adapter = menuAdapter
+                }
+            },
+            onFailure = { error ->
+                requireActivity().runOnUiThread {
+                    Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
+    }
+
+    private fun parseMenuResponse(response: String): List<Item> {
+        val gson = Gson()
+        val menuResponse = gson.fromJson(response, MenuResponse::class.java)
+        return menuResponse.items
+    }
 
 
     private fun replaceFragment(fragment: Fragment){
@@ -220,19 +269,13 @@ class MenuFragment : Fragment() {
         binding.rvRecommend.addItemDecoration(HorizontalSpaceItemDecoration(28.toPx(requireContext())))
 
         val itemClickListener = object : MenuAdapter.OnItemClickListener{
-            override fun onItemClick(item: MenuItem) {
+            override fun onItemClick(item: Item) {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fcvMainApp, DetailsFragment())
                     .addToBackStack(null)
                     .commit()
             }
         }
-        menuAdapter = MenuAdapter(menuItems,itemClickListener, { item ->
-            vm.addMenuItemToOrder(item)
-        })
-
-        binding.rvMenu.layoutManager = GridLayoutManager(requireContext(), 2)
-        binding.rvMenu.adapter = menuAdapter
     }
     override fun onDestroyView() {
         super.onDestroyView()

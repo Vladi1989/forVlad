@@ -22,4 +22,10 @@ class OrdersInteractorImpl(private val ordersRepository: OrdersRepository): Orde
        return ordersRepository.getAllList()
 
     }
+
+    override fun replaceItem(oldItem: MenuItem, newItem: MenuItem) {
+        ordersRepository.replaceItem(oldItem,newItem)
+    }
+
+
 }
