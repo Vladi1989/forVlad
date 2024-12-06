@@ -94,7 +94,10 @@
             android:fontFamily="@font/exo_medium"
             android:text="Crispy crust, tomato sauce, fresh mozzarella, and basil."
             android:textColor="@color/text3"
-            android:textSize="12dp" />
+            android:textSize="12dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:scrollHorizontally="false" />
 
         <TextView
             android:id="@+id/product_price"

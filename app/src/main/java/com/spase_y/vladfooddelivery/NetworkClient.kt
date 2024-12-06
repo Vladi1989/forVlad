@@ -2,6 +2,7 @@ package com.spase_y.vladfooddelivery
 
 import android.util.Log
 import com.google.gson.Gson
+import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
 import com.spase_y.vladfooddelivery.root.Constants.GET_URL_FROM_BACK
 import okhttp3.Call
 import okhttp3.Callback
@@ -34,9 +35,9 @@ class NetworkClient {
                     val responseBody = response.body?.string()
                     if(responseBody != null){
                         try {
-                            val menuResponse = gson.fromJson(responseBody, MenuResponse::class.java)
-                            Log.d("MenuService", "Полученные данные: ${menuResponse.items.joinToString { it.item_name }}")
-                            onSuccess(menuResponse.items.toString())
+                            val listMenu = gson.fromJson(responseBody, ListMenu::class.java)
+                            Log.d("MenuService", "Полученные данные: ${listMenu.items.joinToString { it.item_name }}")
+                            onSuccess(listMenu.items.toString())
                         } catch (e: Exception) {
                             Log.e("MenuService", "Ошибка парсинга JSON: ${e.message}")
                             onFailure("Ошибка парсинга JSON: ${e.message}")

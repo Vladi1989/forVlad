@@ -3,20 +3,22 @@ package com.spase_y.vladfooddelivery.main.menu.ui.presentation
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import kotlin.concurrent.thread
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
-import com.spase_y.vladfooddelivery.Item
-import com.spase_y.vladfooddelivery.MenuResponse
+import com.spase_y.vladfooddelivery.main.menu.data.model.Item
+import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
 import com.spase_y.vladfooddelivery.NetworkClient
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.core.toPx
@@ -31,6 +33,8 @@ import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import com.spase_y.vladfooddelivery.root.Constants.GET_URL_FROM_BACK
+import okhttp3.Request
+import okhttp3.OkHttpClient
 import org.koin.android.ext.android.inject
 import kotlin.collections.ArrayList
 
@@ -149,55 +153,52 @@ class MenuFragment : Fragment() {
         )
 
         binding.rvMenu.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = GridLayoutManager(requireContext(), 2) // 2 - количество элементов в строке
             adapter = menuAdapter
         }
     }
 
     private fun fetchMenuItems() {
         val url = GET_URL_FROM_BACK
+        val client = OkHttpClient()
 
-        networkClient.makeRequestAsync(
-            url,
-            onSuccess = { response ->
-                requireActivity().runOnUiThread {
-                    val items = parseMenuResponse(response)
-                    menuAdapter = MenuAdapter(
-                        menuItems = items,
-                        listener = object : MenuAdapter.OnItemClickListener {
-                            override fun onItemClick(item: Item) {
-                                Toast.makeText(
-                                    requireContext(),
-                                    "Clicked: ${item.item_name}",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        },
-                        onAddClick = { item ->
-                            Toast.makeText(
-                                requireContext(),
-                                "Added: ${item.item_name}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    )
-                    binding.rvMenu.adapter = menuAdapter
+        requireActivity().runOnUiThread {
+            binding.pbLoading.visibility = View.VISIBLE
+        }
+
+        thread {
+            try {
+                val request = Request.Builder()
+                    .url(url)
+                    .build()
+
+                client.newCall(request).execute().use { response ->
+                    if (!response.isSuccessful) throw Exception("Ошибка запроса: ${response.code}")
+
+                    val responseBody = response.body?.string() ?: throw Exception("Пустой ответ от сервера")
+                    Log.d("MenuFragment", "Ответ от сервера: $responseBody")
+
+                    val listMenu = Gson().fromJson(responseBody, ListMenu::class.java)
+                    val items = listMenu.items
+
+                    Log.d("MenuFragment", "Количество элементов: ${items.size}")
+
+                    // Обновляем адаптер новыми элементами в главном потоке
+                    requireActivity().runOnUiThread {
+                        menuAdapter.updateItems(items)
+                        binding.pbLoading.visibility = View.GONE
+                    }
                 }
-            },
-            onFailure = { error ->
+            } catch (e: Exception) {
+                Log.e("MenuFragment", "Ошибка загрузки меню: ${e.message}")
                 requireActivity().runOnUiThread {
-                    Toast.makeText(requireContext(), "Error: $error", Toast.LENGTH_SHORT).show()
+                    binding.pbLoading.visibility = View.GONE
+                    // Вывод ошибки пользователю (например, через Toast)
+                    Toast.makeText(requireContext(), "Ошибка загрузки данных: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-        )
+        }
     }
-
-    private fun parseMenuResponse(response: String): List<Item> {
-        val gson = Gson()
-        val menuResponse = gson.fromJson(response, MenuResponse::class.java)
-        return menuResponse.items
-    }
-
 
     private fun replaceFragment(fragment: Fragment){
         requireActivity().supportFragmentManager
