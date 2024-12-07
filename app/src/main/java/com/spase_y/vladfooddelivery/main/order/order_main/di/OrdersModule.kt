@@ -5,7 +5,6 @@ import com.spase_y.vladfooddelivery.main.order.order_main.data.OrdersRepositoryI
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.api.OrdersInteractor
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.api.OrdersRepository
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.impl.OrdersInteractorImpl
-import com.spase_y.vladfooddelivery.main.order.order_main.ui.view_model.OrderViewModel
 import org.koin.dsl.module
 
 val ordersModule = module {

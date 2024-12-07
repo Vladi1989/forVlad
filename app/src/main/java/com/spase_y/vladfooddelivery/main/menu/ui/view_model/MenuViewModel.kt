@@ -11,44 +11,29 @@ import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.root.Constants.MAX_COUNT_ITEMS_TO_ORDER
 
 class MenuViewModel(
-    private val ordersInteractor: OrdersInteractor,
     private val menuInteractor: MenuInteractor
 ) {
-    private val menuLd = MutableLiveData<MenuScreenState?>()
-    fun getMenuLd():LiveData<MenuScreenState?>{
-        return menuLd
-    }
-    fun addMenuItemToOrder(item:MenuItem){
-        menuLd.postValue(MenuScreenState.Loading)
-        if(ordersInteractor.getAllList().size > MAX_COUNT_ITEMS_TO_ORDER){
-            menuLd.postValue(MenuScreenState.Error)
-        } else {
-            menuLd.postValue(MenuScreenState.Succes)
-            ordersInteractor.addItem(item)
+    // LiveData для управления состоянием меню
+    private val menuLiveData = MutableLiveData<MenuScreenState>()
 
-        }
-    }
+    fun getMenuLiveData(): LiveData<MenuScreenState> = menuLiveData
 
+    // Метод для загрузки меню
     fun loadMenu() {
-        menuLd.postValue(MenuScreenState.Loading)
+        menuLiveData.postValue(MenuScreenState.Loading)
         menuInteractor.getMenu { response ->
             when (response) {
                 is MenuResponse.Success -> {
-                    menuLd.postValue(object : MenuScreenState {
-                        val items = response.items
-                    })
+                    menuLiveData.postValue(MenuScreenState.Success(response.items))
                 }
                 is MenuResponse.Error -> {
-                    menuLd.postValue(object : MenuScreenState {
-                        val errorMessage = response.errorMessage
-                    })
+                    menuLiveData.postValue(MenuScreenState.Error(response.errorMessage))
                 }
             }
         }
     }
 
-
-    fun clearMenuLD(){
-        menuLd.postValue(null)
+    fun clearMenuState() {
+        menuLiveData.postValue(null)
     }
 }

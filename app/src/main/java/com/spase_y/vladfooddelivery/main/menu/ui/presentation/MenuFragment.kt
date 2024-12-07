@@ -19,7 +19,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.gson.Gson
 import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
-import com.spase_y.vladfooddelivery.NetworkClient
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.FragmentMenuBinding
@@ -46,8 +45,6 @@ class MenuFragment : Fragment() {
     private val binding get() = _binding!!
     private val handler = Handler(Looper.getMainLooper())
     val vm by inject<MenuViewModel>() //1 OrderViewModel
-
-
     private val buttonTextList = listOf("Order Now", "Get Discount", "Shop Now")
     private lateinit var viewPager2: ViewPager2
     private lateinit var adapter: PromotionsAdapter
@@ -56,8 +53,6 @@ class MenuFragment : Fragment() {
     private lateinit var recommendMenuAdapter: RecommendMenuAdapter
     private lateinit var menuAdapter: MenuAdapter
 
-
-    private val networkClient = NetworkClient()
     private val recommendItems = listOf(
         MenuItem(
             R.drawable.icon_item_menu,
@@ -91,22 +86,18 @@ class MenuFragment : Fragment() {
 
         MainAppFragment.getInstance().showNavigation()
 
-        vm.getMenuLd().observe(viewLifecycleOwner){
-            when(it){
+        vm.getMenuLiveData().observe(viewLifecycleOwner) {
+            when (it) {
                 is MenuScreenState.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
                 is MenuScreenState.Error -> {
-                    Toast.makeText(requireContext(), "Корзина переполнена", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
-                    vm.clearMenuLD()
-
                 }
-                is MenuScreenState.Succes -> {
-                    Toast.makeText(requireContext(), "Успешно добавлено", Toast.LENGTH_SHORT).show()
+                is MenuScreenState.Success -> {
+                    menuAdapter.updateItems(it.items)
                     binding.pbLoading.visibility = View.GONE
-                    vm.clearMenuLD()
-
                 }
             }
         }
