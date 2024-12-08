@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentCurrentOrderBinding
-import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 import com.spase_y.vladfooddelivery.main.order.delivery.DeliveryFragment
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.adapters.OrderAdapter
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.model.OrderScreenState
@@ -82,7 +82,7 @@ class CurrentOrderFragment : Fragment() {
 
                     var totalSumWithoutDelivery = 0f
                     orderList.forEach { item ->
-                        totalSumWithoutDelivery += item.price * item.quantity
+                        totalSumWithoutDelivery += item.item_price.toFloat() * item.quantity
                     }
                     val totalSum = totalSumWithoutDelivery + priceForDelivery
 
@@ -93,6 +93,10 @@ class CurrentOrderFragment : Fragment() {
                 }
                 is OrderScreenState.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
+                }
+                is OrderScreenState.Error -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    binding.pbLoading.visibility = View.GONE
                 }
             }
         }

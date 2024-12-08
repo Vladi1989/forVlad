@@ -7,11 +7,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.spase_y.vladfooddelivery.R
-import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
+import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 
 class OrderAdapter(
-    private val onQuantityChanged: (MenuItem,MenuItem) -> Unit,
-    private val onClickDeleteItem: (MenuItem) -> Unit)
+    private val onQuantityChanged: (Item,Item) -> Unit,
+    private val onClickDeleteItem: (Item) -> Unit)
     : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>(){
 
         inner class OrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
@@ -23,10 +23,10 @@ class OrderAdapter(
             val btnMinusFood: ImageView= itemView.findViewById(R.id.ivMinusFood)
             val deleteItem: ImageView= itemView.findViewById(R.id.ivDeleteItem)
 
-            fun bind(item: MenuItem) {
-                productName.text = item.name
-                productImage.setImageResource(item.imageRes)
-                productPrice.text = "$${"%.2f".format(item.price * item.quantity)}"
+            fun bind(item: Item) {
+                productName.text = item.item_name
+                productImage.setImageResource(item.item_image)
+                productPrice.text = "$${"%.2f".format(item.item_price * item.quantity)}"
                 quantityText.text = item.quantity.toString()
                 btnAddFood.setOnClickListener {
                     onQuantityChanged(item,item.copy(quantity = item.quantity + 1))
@@ -42,7 +42,7 @@ class OrderAdapter(
                 }
             }
         }
-    var orderList: MutableList<MenuItem> = mutableListOf()
+    var orderList: MutableList<Item> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_current_order,parent,false)

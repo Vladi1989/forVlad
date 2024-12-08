@@ -22,7 +22,6 @@ import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.FragmentMenuBinding
-import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.promotions_adapters.PromotionsAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter.RecommendMenuAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter
@@ -45,6 +44,8 @@ class MenuFragment : Fragment() {
     private val binding get() = _binding!!
     private val handler = Handler(Looper.getMainLooper())
     val vm by inject<MenuViewModel>() //1 OrderViewModel
+
+
     private val buttonTextList = listOf("Order Now", "Get Discount", "Shop Now")
     private lateinit var viewPager2: ViewPager2
     private lateinit var adapter: PromotionsAdapter
@@ -53,19 +54,28 @@ class MenuFragment : Fragment() {
     private lateinit var recommendMenuAdapter: RecommendMenuAdapter
     private lateinit var menuAdapter: MenuAdapter
 
+
     private val recommendItems = listOf(
-        MenuItem(
-            R.drawable.icon_item_menu,
-            "Margherita Pizza",
-            "Crispy crust, tomato sauce, fresh mozzarella, and basil.",
-            1.29f
+        Item(
+            item_calories = 200,
+            item_description = "Crispy crust, tomato sauce, fresh mozzarella, and basil.",
+            item_id = "1",
+            item_image = R.drawable.icon_item_menu, // Используем ресурс изображения
+            item_is_vegan = false,
+            item_name = "Margherita Pizza",
+            item_price = 1.29,
+            quantity = 1
         ),
-        MenuItem(
-            R.drawable.icon_item_menu,
-            "Margherita Pizza",
-            "Tomato sauce, fresh mozzarella, and basil.",
-            3.29f
-        ),
+        Item(
+            item_calories = 250,
+            item_description = "Tomato sauce, fresh mozzarella, and basil.",
+            item_id = "2",
+            item_image = R.drawable.icon_item_menu, // Используем ресурс изображения
+            item_is_vegan = true,
+            item_name = "Vegan Margherita Pizza",
+            item_price = 3.29,
+            quantity = 1
+        )
     )
 
 
@@ -86,17 +96,24 @@ class MenuFragment : Fragment() {
 
         MainAppFragment.getInstance().showNavigation()
 
-        vm.getMenuLiveData().observe(viewLifecycleOwner) {
-            when (it) {
+        vm.getMenuLd().observe(viewLifecycleOwner){
+            when(it){
                 is MenuScreenState.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
                 is MenuScreenState.Error -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Корзина переполнена", Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
+                    vm.clearMenuLD()
+
                 }
                 is MenuScreenState.Success -> {
-                    menuAdapter.updateItems(it.items)
+                    Toast.makeText(requireContext(), "Успешно добавлено", Toast.LENGTH_SHORT).show()
+                    binding.pbLoading.visibility = View.GONE
+                    vm.clearMenuLD()
+
+                }
+                null -> {
                     binding.pbLoading.visibility = View.GONE
                 }
             }
@@ -243,16 +260,16 @@ class MenuFragment : Fragment() {
 
     private fun setUpMenuRecyclerViews() {
         val recommendItemClickListener = object : RecommendMenuAdapter.OnItemClickListener{
-            override fun onItemClick(item: MenuItem) {
-                Toast.makeText(requireContext(),"${item.name} clicked", Toast.LENGTH_SHORT).show()
+            override fun onItemClick(item: Item) {
+                Toast.makeText(requireContext(),"${item.item_name} clicked", Toast.LENGTH_SHORT).show()
             }
         }
         recommendMenuAdapter = RecommendMenuAdapter(
             items = recommendItems,
             listener = recommendItemClickListener,
-            onAddClick = { item ->
+            onAddClick = { item:Item ->
                 vm.addMenuItemToOrder(item)
-                Toast.makeText(requireContext(), "${item.name} added to cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${item.item_name} added to cart", Toast.LENGTH_SHORT).show()
             }
         )
         binding.rvRecommend.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

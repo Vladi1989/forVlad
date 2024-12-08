@@ -1,15 +1,15 @@
 package com.spase_y.vladfooddelivery.main.order.order_main.domain.impl
 
-import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
+import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.api.OrdersInteractor
 import com.spase_y.vladfooddelivery.main.order.order_main.domain.api.OrdersRepository
 
 class OrdersInteractorImpl(private val ordersRepository: OrdersRepository): OrdersInteractor {
-    override fun addItem(item: MenuItem) {
+    override fun addItem(item: Item) {
         ordersRepository.addItem(item)
     }
 
-    override fun removeItem(item: MenuItem) {
+    override fun removeItem(item: Item) {
         ordersRepository.removeItem(item)
 
     }
@@ -18,12 +18,12 @@ class OrdersInteractorImpl(private val ordersRepository: OrdersRepository): Orde
         ordersRepository.clearAllList()
     }
 
-    override fun getAllList(): List<MenuItem> {
+    override fun getAllList(): List<Item> {
        return ordersRepository.getAllList()
 
     }
 
-    override fun replaceItem(oldItem: MenuItem, newItem: MenuItem) {
+    override fun replaceItem(oldItem: Item, newItem: Item) {
         ordersRepository.replaceItem(oldItem,newItem)
     }
 

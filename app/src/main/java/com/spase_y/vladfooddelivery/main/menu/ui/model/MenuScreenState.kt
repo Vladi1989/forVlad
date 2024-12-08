@@ -7,3 +7,4 @@ sealed class MenuScreenState {
     data class Success(val items: List<Item>) : MenuScreenState()
     data class Error(val errorMessage: String) : MenuScreenState()
 }
+

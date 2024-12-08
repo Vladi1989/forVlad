@@ -5,25 +5,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.RecommendItemMenuBinding
-import com.spase_y.vladfooddelivery.main.menu.data.model.MenuItem
+import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter.OnItemClickListener
 
 class RecommendMenuAdapter(
-    private val items: List<MenuItem>,
+    private val items: List<Item>,
     private val listener: OnItemClickListener,
-    private val onAddClick: (MenuItem)-> Unit
+    private val onAddClick: (Item)-> Unit
 ) : RecyclerView.Adapter<RecommendMenuAdapter.MenuViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClick(item:MenuItem)
+        fun onItemClick(item:Item)
     }
 
     inner class MenuViewHolder(val binding: RecommendItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: MenuItem) {
-            binding.imageView7.setImageResource(item.imageRes)
-            binding.productName.text = item.name
-            binding.productTitle.text = item.description
-            binding.productPrice.text = "$ ${item.price}"
+        fun bind(item: Item) {
+            binding.imageView7.setImageResource(item.item_image)
+            binding.productName.text = item.item_name
+            binding.productTitle.text = item.item_description
+            binding.productPrice.text = "$ ${item.item_price}"
             binding.btnAddRecommend.setOnClickListener {
                 onAddClick.invoke(item)
             }
