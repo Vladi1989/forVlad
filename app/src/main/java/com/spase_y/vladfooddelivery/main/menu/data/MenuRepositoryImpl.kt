@@ -13,9 +13,8 @@ import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 
-class MenuRepositoryImpl(get: Any) : MenuRepository {
+class MenuRepositoryImpl : MenuRepository {
     private val client = OkHttpClient()
-
     private val gson = Gson()
 
     override fun getMenu(onResponse: (MenuResponse) -> Unit) {

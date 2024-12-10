@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.spase_y.vladfooddelivery.loading.main.LoadingFragment
 import com.spase_y.vladfooddelivery.R
+import com.spase_y.vladfooddelivery.databinding.ActivityMainBinding
 import com.spase_y.vladfooddelivery.root.ui.model.MainScreenState
 import com.spase_y.vladfooddelivery.root.ui.view_model.MainViewModel
 import com.spase_y.vladfooddelivery.main.menu.ui.presentation.MenuFragment
@@ -14,12 +15,15 @@ import com.spase_y.vladfooddelivery.root.login_status.domain.api.LoginUserIntera
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
     val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
 
         if (savedInstanceState == null) {
@@ -31,12 +35,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.getMainLd().observe(this) { state ->
             when (state) {
                 is MainScreenState.Loading -> {
-                    val progressBar = findViewById<ProgressBar>(R.id.pbMain)
-                    progressBar.visibility = View.VISIBLE
+                    binding.pbMain.visibility = View.VISIBLE
                 }
                 is MainScreenState.Result -> {
-                    val progressBar = findViewById<ProgressBar>(R.id.pbMain)
-                    progressBar.visibility = View.INVISIBLE
+                    binding.pbMain.visibility = View.INVISIBLE
                     if (state.isUserLoggedIn == LoginUserInteractor.UserStatus.LOGIN) {
                         showMenu()
                     } else {

@@ -2,6 +2,7 @@ package com.spase_y.vladfooddelivery.main.menu.ui.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 import com.spase_y.vladfooddelivery.main.menu.domain.api.MenuInteractor
 import com.spase_y.vladfooddelivery.main.menu.domain.model.MenuResponse
@@ -13,54 +14,45 @@ import com.spase_y.vladfooddelivery.root.Constants.MAX_COUNT_ITEMS_TO_ORDER
 class MenuViewModel(
     private val ordersInteractor: OrdersInteractor,
     private val menuInteractor: MenuInteractor
-) {
-    private val menuLd = MutableLiveData<MenuScreenState?>()
-    fun getMenuLd(): LiveData<MenuScreenState?> {
-        return menuLd
+) : ViewModel() {
+
+
+    private val _menuLd = MutableLiveData<MenuScreenState>()
+    val menuLd: LiveData<MenuScreenState> = _menuLd
+
+
+    private val _orderLd = MutableLiveData<OrderScreenState>()
+    val orderLd: LiveData<OrderScreenState> = _orderLd
+
+    init {
+        loadMenu()
     }
 
-    private val orderLd = MutableLiveData<OrderScreenState?>()
-    fun getOrderLd(): LiveData<OrderScreenState?> {
-        return orderLd
-    }
-
-    fun addMenuItemToOrder(item: Item) {
-        orderLd.postValue(OrderScreenState.Loading)
-
-        if (ordersInteractor.getAllList().size >= MAX_COUNT_ITEMS_TO_ORDER) {
-            orderLd.postValue(OrderScreenState.Error("Maximum items exceeded"))
-        } else {
-            ordersInteractor.addItem(item)
-
-            val updatedOrderList = ordersInteractor.getAllList()  // Это ваша переменная, которая содержит обновленный список
-
-            orderLd.postValue(OrderScreenState.Success(updatedOrderList))
-        }
-    }
-
-    // Загрузка меню
     fun loadMenu() {
-        menuLd.postValue(MenuScreenState.Loading)
+        _menuLd.postValue(MenuScreenState.Loading)
         menuInteractor.getMenu { response ->
             when (response) {
                 is MenuResponse.Success -> {
-                    menuLd.postValue(MenuScreenState.Success(response.items))
+                    _menuLd.postValue(MenuScreenState.Success(response.items))
                 }
                 is MenuResponse.Error -> {
-                    menuLd.postValue(MenuScreenState.Error(response.errorMessage))
+                    _menuLd.postValue(MenuScreenState.Error(response.errorMessage))
                 }
             }
         }
     }
 
-    // Очистка LiveData для меню
-    fun clearMenuLD() {
-        menuLd.postValue(null)
-    }
+    fun addMenuItemToOrder(item: Item) {
+        _orderLd.postValue(OrderScreenState.Loading)
 
-    // Очистка LiveData для добавления в заказ
-    fun clearOrderLD() {
-        orderLd.postValue(null)
+        if (ordersInteractor.getAllList().size >= MAX_COUNT_ITEMS_TO_ORDER) {
+            _orderLd.postValue(OrderScreenState.Error("Превышен максимум заказов"))
+        } else {
+            ordersInteractor.addItem(item)
+
+            val updatedOrderList = ordersInteractor.getAllList()
+            _orderLd.postValue(OrderScreenState.Success(updatedOrderList))
+        }
     }
 }
 

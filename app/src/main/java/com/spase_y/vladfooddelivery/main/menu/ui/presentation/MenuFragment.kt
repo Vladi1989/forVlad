@@ -28,6 +28,7 @@ import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdap
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter.HorizontalSpaceItemDecoration
 import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
+import com.spase_y.vladfooddelivery.main.order.order_main.ui.model.OrderScreenState
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
 import com.spase_y.vladfooddelivery.root.Constants.GET_URL_FROM_BACK
@@ -43,7 +44,7 @@ class MenuFragment : Fragment() {
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     private val handler = Handler(Looper.getMainLooper())
-    val vm by inject<MenuViewModel>() //1 OrderViewModel
+    val vm by inject<MenuViewModel>()
 
 
     private val buttonTextList = listOf("Order Now", "Get Discount", "Shop Now")
@@ -60,7 +61,7 @@ class MenuFragment : Fragment() {
             item_calories = 200,
             item_description = "Crispy crust, tomato sauce, fresh mozzarella, and basil.",
             item_id = "1",
-            item_image = R.drawable.icon_item_menu, // Используем ресурс изображения
+            item_image = "", // Используем ресурс изображения
             item_is_vegan = false,
             item_name = "Margherita Pizza",
             item_price = 1.29,
@@ -70,7 +71,7 @@ class MenuFragment : Fragment() {
             item_calories = 250,
             item_description = "Tomato sauce, fresh mozzarella, and basil.",
             item_id = "2",
-            item_image = R.drawable.icon_item_menu, // Используем ресурс изображения
+            item_image = "", // Используем ресурс изображения
             item_is_vegan = true,
             item_name = "Vegan Margherita Pizza",
             item_price = 3.29,
@@ -96,28 +97,39 @@ class MenuFragment : Fragment() {
 
         MainAppFragment.getInstance().showNavigation()
 
-        vm.getMenuLd().observe(viewLifecycleOwner){
+        vm.menuLd.observe(viewLifecycleOwner){
             when(it){
                 is MenuScreenState.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
                 is MenuScreenState.Error -> {
-                    Toast.makeText(requireContext(), "Корзина переполнена", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Ошибка: ${it.errorMessage}", Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
-                    vm.clearMenuLD()
-
                 }
                 is MenuScreenState.Success -> {
-                    Toast.makeText(requireContext(), "Успешно добавлено", Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
-                    vm.clearMenuLD()
+                    menuAdapter.updateItems(it.items)
 
-                }
-                null -> {
-                    binding.pbLoading.visibility = View.GONE
                 }
             }
         }
+        vm.orderLd.observe(viewLifecycleOwner) { orderState ->
+            when (orderState) {
+                is OrderScreenState.Loading -> {
+                    binding.pbLoading.visibility = View.VISIBLE
+                }
+                is OrderScreenState.Error -> {
+                    Toast.makeText(requireContext(), "Ошибка заказа: ${orderState.errorMessage}", Toast.LENGTH_SHORT).show()
+                    binding.pbLoading.visibility = View.GONE
+                }
+                is OrderScreenState.Success -> {
+                    Toast.makeText(requireContext(), "Продукт успешно обновлен", Toast.LENGTH_SHORT).show()
+                    binding.pbLoading.visibility = View.GONE
+
+                }
+            }
+        }
+
         binding.edSearch.onFocusChangeListener = View.OnFocusChangeListener{_,hasFocus ->
             if(hasFocus){
                 binding.llSearchFood.setBackgroundResource(R.drawable.button_shape_stroke)
@@ -152,11 +164,23 @@ class MenuFragment : Fragment() {
             menuItems = emptyList(),
             listener = object : MenuAdapter.OnItemClickListener {
                 override fun onItemClick(item: Item) {
-                    Toast.makeText(requireContext(), "Clicked: ${item.item_name}", Toast.LENGTH_SHORT).show()
+                    val detailsFragment = DetailsFragment()
+                    val bundle = Bundle()
+
+                    val jsonItem = Gson().toJson(item) // Преобразование объекта в JSON
+                    bundle.putString("item", jsonItem)
+
+                    detailsFragment.arguments = bundle
+
+                    requireActivity().supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.fcvMainApp, detailsFragment)
+                        .addToBackStack(null)
+                        .commit()
                 }
             },
             onAddClick = { item ->
-                Toast.makeText(requireContext(), "Added: ${item.item_name}", Toast.LENGTH_SHORT).show()
+                vm.addMenuItemToOrder(item)
             }
         )
 

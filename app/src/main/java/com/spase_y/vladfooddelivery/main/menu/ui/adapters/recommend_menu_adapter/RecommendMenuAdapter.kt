@@ -3,6 +3,7 @@ package com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapte
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.RecommendItemMenuBinding
 import com.spase_y.vladfooddelivery.main.menu.data.model.Item
@@ -20,7 +21,7 @@ class RecommendMenuAdapter(
 
     inner class MenuViewHolder(val binding: RecommendItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
-            binding.imageView7.setImageResource(item.item_image)
+            Glide.with(binding.root).load(item.item_image).into(binding.imageView7)
             binding.productName.text = item.item_name
             binding.productTitle.text = item.item_description
             binding.productPrice.text = "$ ${item.item_price}"

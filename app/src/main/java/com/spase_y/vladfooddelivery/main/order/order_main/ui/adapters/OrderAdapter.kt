@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 
@@ -25,7 +26,7 @@ class OrderAdapter(
 
             fun bind(item: Item) {
                 productName.text = item.item_name
-                productImage.setImageResource(item.item_image)
+                Glide.with(itemView).load(item.item_image).into(productImage)
                 productPrice.text = "$${"%.2f".format(item.item_price * item.quantity)}"
                 quantityText.text = item.quantity.toString()
                 btnAddFood.setOnClickListener {

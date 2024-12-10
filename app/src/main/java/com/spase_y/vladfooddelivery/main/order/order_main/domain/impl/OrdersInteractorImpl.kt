@@ -26,6 +26,4 @@ class OrdersInteractorImpl(private val ordersRepository: OrdersRepository): Orde
     override fun replaceItem(oldItem: Item, newItem: Item) {
         ordersRepository.replaceItem(oldItem,newItem)
     }
-
-
 }
