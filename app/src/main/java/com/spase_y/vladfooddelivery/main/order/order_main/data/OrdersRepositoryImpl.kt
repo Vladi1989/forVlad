@@ -15,7 +15,7 @@ class OrdersRepositoryImpl(
         val currentList = getAllList().toMutableList()
 
         // Ищем элемент с таким же названием.
-        val existingItem = currentList.find { it.item_name == item.item_name }
+        val existingItem = currentList.find { it.itemName == item.itemName }
 
         if (existingItem != null) {
             // Если элемент найден, увеличиваем количество.

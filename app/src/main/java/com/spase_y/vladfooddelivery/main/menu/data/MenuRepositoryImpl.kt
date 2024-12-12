@@ -43,8 +43,10 @@ class MenuRepositoryImpl : MenuRepository {
                     if (responseBody != null) {
                         try {
                             val listMenu = gson.fromJson(responseBody, ListMenu::class.java)
-                            Log.d("MenuService", "Полученные данные: ${listMenu.items.joinToString { it.item_name }}")
-                            onResponse(MenuResponse.Success(listMenu.items))
+                            // Объединяем все элементы меню в один список
+                            val allItems = listMenu.pizzaItems + listMenu.burgersItems + listMenu.wokItems + listMenu.sushiItems
+                            Log.d("MenuService", "Полученные данные: ${allItems.joinToString { it.itemName }}")
+                            onResponse(MenuResponse.Success(allItems))
                         } catch (e: Exception) {
                             Log.e("MenuService", "Ошибка парсинга JSON: ${e.message}")
                             onResponse(MenuResponse.Error("Ошибка парсинга данных: ${e.message}"))

@@ -25,9 +25,9 @@ class OrderAdapter(
             val deleteItem: ImageView= itemView.findViewById(R.id.ivDeleteItem)
 
             fun bind(item: Item) {
-                productName.text = item.item_name
-                Glide.with(itemView).load(item.item_image).into(productImage)
-                productPrice.text = "$${"%.2f".format(item.item_price * item.quantity)}"
+                productName.text = item.itemName
+                Glide.with(itemView).load(item.itemImage).into(productImage)
+                productPrice.text = "$${"%.2f".format(item.itemPrice * item.quantity)}"
                 quantityText.text = item.quantity.toString()
                 btnAddFood.setOnClickListener {
                     onQuantityChanged(item,item.copy(quantity = item.quantity + 1))

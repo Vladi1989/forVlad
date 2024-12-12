@@ -1,12 +1,14 @@
 package com.spase_y.vladfooddelivery.main.menu.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Item(
-    val item_calories: Int,
-    val item_description: String,
-    val item_id: String,
-    val item_image: String,
-    val item_is_vegan: Boolean,
-    val item_name: String,
-    val item_price: Double,
-    val quantity: Int
+    @SerializedName("item_calories") val itemCalories: Int,
+    @SerializedName("item_description") val itemDescription: String,
+    @SerializedName("item_id") val itemId: String,
+    @SerializedName("item_image") val itemImage: String,
+    @SerializedName("item_is_vegan") val itemIsVegan: Boolean,
+    @SerializedName("item_name") val itemName: String,
+    @SerializedName("item_price") val itemPrice: Double,
+    @SerializedName("quantity") val quantity: Int
 )

@@ -82,7 +82,7 @@ class CurrentOrderFragment : Fragment() {
 
                     var totalSumWithoutDelivery = 0f
                     orderList.forEach { item ->
-                        totalSumWithoutDelivery += item.item_price.toFloat() * item.quantity
+                        totalSumWithoutDelivery += item.itemPrice.toFloat() * item.quantity
                     }
                     val totalSum = totalSumWithoutDelivery + priceForDelivery
 

@@ -21,10 +21,10 @@ class RecommendMenuAdapter(
 
     inner class MenuViewHolder(val binding: RecommendItemMenuBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Item) {
-            Glide.with(binding.root).load(item.item_image).into(binding.imageView7)
-            binding.productName.text = item.item_name
-            binding.productTitle.text = item.item_description
-            binding.productPrice.text = "$ ${item.item_price}"
+            Glide.with(binding.root).load(item.itemImage).into(binding.imageView7)
+            binding.productName.text = item.itemName
+            binding.productTitle.text = item.itemDescription
+            binding.productPrice.text = "$ ${item.itemPrice}"
             binding.btnAddRecommend.setOnClickListener {
                 onAddClick.invoke(item)
             }

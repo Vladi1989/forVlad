@@ -35,13 +35,13 @@ class DetailsFragment : Fragment() {
         val item = jsonItem.let { Gson().fromJson(it, Item::class.java) }
 
         item?.let {
-            binding.tvDetailsNameFood.text = it.item_name
-            binding.tvDetailsDescriptions.text = it.item_description
-            binding.tvKcal.text = it.item_calories.toString()
-            binding.tvPriceDetails.text = it.item_price.toString()
+            binding.tvDetailsNameFood.text = it.itemName
+            binding.tvDetailsDescriptions.text = it.itemDescription
+            binding.tvKcal.text = it.itemCalories.toString()
+            binding.tvPriceDetails.text = it.itemPrice.toString()
 
             Glide.with(this)
-                .load(it.item_image)
+                .load(it.itemImage)
                 .into(binding.ivDetailsImage)
 
         }

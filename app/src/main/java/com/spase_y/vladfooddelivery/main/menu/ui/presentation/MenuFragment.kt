@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TableLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlin.concurrent.thread
@@ -16,12 +19,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import com.google.gson.Gson
 import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.FragmentMenuBinding
+import com.spase_y.vladfooddelivery.main.menu.data.model.TabData
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.promotions_adapters.PromotionsAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter.RecommendMenuAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter
@@ -54,27 +59,28 @@ class MenuFragment : Fragment() {
     private lateinit var handlerImageSlider: Handler
     private lateinit var recommendMenuAdapter: RecommendMenuAdapter
     private lateinit var menuAdapter: MenuAdapter
+    private var listMenu: ListMenu? = null
 
 
     private val recommendItems = listOf(
         Item(
-            item_calories = 200,
-            item_description = "Crispy crust, tomato sauce, fresh mozzarella, and basil.",
-            item_id = "1",
-            item_image = "", // Используем ресурс изображения
-            item_is_vegan = false,
-            item_name = "Margherita Pizza",
-            item_price = 1.29,
+            itemCalories = 200,
+            itemDescription = "Crispy crust, tomato sauce, fresh mozzarella, and basil.",
+            itemId = "1",
+            itemImage = "", // Используем ресурс изображения
+            itemIsVegan = false,
+            itemName = "Margherita Pizza",
+            itemPrice = 1.29,
             quantity = 1
         ),
         Item(
-            item_calories = 250,
-            item_description = "Tomato sauce, fresh mozzarella, and basil.",
-            item_id = "2",
-            item_image = "", // Используем ресурс изображения
-            item_is_vegan = true,
-            item_name = "Vegan Margherita Pizza",
-            item_price = 3.29,
+            itemCalories = 250,
+            itemDescription = "Tomato sauce, fresh mozzarella, and basil.",
+            itemId = "2",
+            itemImage = "", // Используем ресурс изображения
+            itemIsVegan = true,
+            itemName = "Vegan Margherita Pizza",
+            itemPrice = 3.29,
             quantity = 1
         )
     )
@@ -157,6 +163,23 @@ class MenuFragment : Fragment() {
 
         // Выполнение сетевого запроса
         fetchMenuItems()
+
+        setupCustomTabs(binding.tlTabLayout)
+
+        binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position){
+                    0 -> listMenu?.let { menuAdapter.updateItems(it.pizzaItems) }
+                    1 -> listMenu?.let { menuAdapter.updateItems(it.burgersItems) }
+                    2 -> listMenu?.let { menuAdapter.updateItems(it.wokItems) }
+                    3 -> listMenu?.let { menuAdapter.updateItems(it.sushiItems) }
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+        binding.tlTabLayout.selectTab(binding.tlTabLayout.getTabAt(0))
+
     }
 
     private fun setupRecyclerView() {
@@ -166,8 +189,7 @@ class MenuFragment : Fragment() {
                 override fun onItemClick(item: Item) {
                     val detailsFragment = DetailsFragment()
                     val bundle = Bundle()
-
-                    val jsonItem = Gson().toJson(item) // Преобразование объекта в JSON
+                    val jsonItem = Gson().toJson(item)
                     bundle.putString("item", jsonItem)
 
                     detailsFragment.arguments = bundle
@@ -210,22 +232,26 @@ class MenuFragment : Fragment() {
                     val responseBody = response.body?.string() ?: throw Exception("Пустой ответ от сервера")
                     Log.d("MenuFragment", "Ответ от сервера: $responseBody")
 
+                    // Получаем объект ListMenu из ответа
                     val listMenu = Gson().fromJson(responseBody, ListMenu::class.java)
-                    val items = listMenu.items
 
-                    Log.d("MenuFragment", "Количество элементов: ${items.size}")
-
-                    // Обновляем адаптер новыми элементами в главном потоке
                     requireActivity().runOnUiThread {
-                        menuAdapter.updateItems(items)
                         binding.pbLoading.visibility = View.GONE
+
+                        // Загрузка данных в адаптер для активной вкладки
+                        when (binding.tlTabLayout.selectedTabPosition) {
+                            0 -> menuAdapter.updateItems(listMenu.pizzaItems)
+                            1 -> menuAdapter.updateItems(listMenu.burgersItems)
+                            2 -> menuAdapter.updateItems(listMenu.wokItems)
+                            3 -> menuAdapter.updateItems(listMenu.sushiItems)
+                            else -> throw Exception("Неизвестная вкладка")
+                        }
                     }
                 }
             } catch (e: Exception) {
                 Log.e("MenuFragment", "Ошибка загрузки меню: ${e.message}")
                 requireActivity().runOnUiThread {
                     binding.pbLoading.visibility = View.GONE
-                    // Вывод ошибки пользователю (например, через Toast)
                     Toast.makeText(requireContext(), "Ошибка загрузки данных: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -238,6 +264,22 @@ class MenuFragment : Fragment() {
             .replace(R.id.fcvMainApp,fragment)
             .addToBackStack(null)
             .commit()
+    }
+    private fun setupCustomTabs(tabLayout: TabLayout){
+        val tabs = listOf(
+            TabData("Pizza", R.drawable.icon_menu_1),
+            TabData("Burgers", R.drawable.icon_menu_2),
+            TabData("Wok", R.drawable.icon_menu_3),
+            TabData("Sushi", R.drawable.icon_menu_4)
+        )
+        tabs.forEachIndexed{ index, tabData ->
+            val tab = tabLayout.newTab()
+            val tabView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item,null)
+            tabView.findViewById<ImageView>(R.id.tab_icon).setImageResource(tabData.iconRes)
+            tabView.findViewById<TextView>(R.id.tab_text).text = tabData.title
+            tab.customView = tabView
+            tabLayout.addTab(tab)
+        }
     }
 
 
@@ -285,7 +327,7 @@ class MenuFragment : Fragment() {
     private fun setUpMenuRecyclerViews() {
         val recommendItemClickListener = object : RecommendMenuAdapter.OnItemClickListener{
             override fun onItemClick(item: Item) {
-                Toast.makeText(requireContext(),"${item.item_name} clicked", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),"${item.itemName} clicked", Toast.LENGTH_SHORT).show()
             }
         }
         recommendMenuAdapter = RecommendMenuAdapter(
@@ -293,7 +335,7 @@ class MenuFragment : Fragment() {
             listener = recommendItemClickListener,
             onAddClick = { item:Item ->
                 vm.addMenuItemToOrder(item)
-                Toast.makeText(requireContext(), "${item.item_name} added to cart", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${item.itemName} added to cart", Toast.LENGTH_SHORT).show()
             }
         )
         binding.rvRecommend.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)

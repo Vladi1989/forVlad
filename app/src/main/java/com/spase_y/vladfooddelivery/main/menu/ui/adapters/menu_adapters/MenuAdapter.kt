@@ -20,12 +20,12 @@ class MenuAdapter(
     inner class MenuAdapterViewHolder(val binding: ItemMenuBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item: Item){
             Glide.with(binding.imageView8.context)
-                .load(item.item_image)
+                .load(item.itemImage)
                 .into(binding.imageView8) 
 
-            binding.productName.text = item.item_name
-            binding.productTitle.text = item.item_description
-            binding.productPrice.text = "\$ ${item.item_price}"
+            binding.productName.text = item.itemName
+            binding.productTitle.text = item.itemDescription
+            binding.productPrice.text = "\$ ${item.itemPrice}"
             binding.btnAdd.setOnClickListener {
                 onAddClick.invoke(item)
             }

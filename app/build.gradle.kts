@@ -48,6 +48,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation (libs.google.material.v190)
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
     implementation ("com.daimajia.androidanimations:library:2.4@aar")
