@@ -16,10 +16,8 @@ class MenuViewModel(
     private val menuInteractor: MenuInteractor
 ) : ViewModel() {
 
-
     private val _menuLd = MutableLiveData<MenuScreenState>()
     val menuLd: LiveData<MenuScreenState> = _menuLd
-
 
     private val _orderLd = MutableLiveData<OrderScreenState>()
     val orderLd: LiveData<OrderScreenState> = _orderLd

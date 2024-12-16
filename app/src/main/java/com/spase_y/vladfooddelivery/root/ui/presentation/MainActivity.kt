@@ -2,7 +2,6 @@ package com.spase_y.vladfooddelivery.root.ui.presentation
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.spase_y.vladfooddelivery.loading.main.LoadingFragment

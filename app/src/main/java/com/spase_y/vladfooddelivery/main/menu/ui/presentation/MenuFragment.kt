@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +19,7 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.gson.Gson
 import com.spase_y.vladfooddelivery.main.menu.data.model.Item
 import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
@@ -36,9 +36,6 @@ import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.model.OrderScreenState
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.presentation.CurrentOrderFragment
 import com.spase_y.vladfooddelivery.main.root.MainAppFragment
-import com.spase_y.vladfooddelivery.root.Constants.GET_URL_FROM_BACK
-import okhttp3.Request
-import okhttp3.OkHttpClient
 import org.koin.android.ext.android.inject
 import kotlin.collections.ArrayList
 
@@ -50,6 +47,7 @@ class MenuFragment : Fragment() {
     private val binding get() = _binding!!
     private val handler = Handler(Looper.getMainLooper())
     val vm by inject<MenuViewModel>()
+    private lateinit var allMenuData: ListMenu
 
 
     private val buttonTextList = listOf("Order Now", "Get Discount", "Shop Now")
@@ -103,18 +101,24 @@ class MenuFragment : Fragment() {
 
         MainAppFragment.getInstance().showNavigation()
 
-        vm.menuLd.observe(viewLifecycleOwner){
-            when(it){
+        vm.menuLd.observe(viewLifecycleOwner) { state ->
+            when (state) {
                 is MenuScreenState.Loading -> {
                     binding.pbLoading.visibility = View.VISIBLE
                 }
                 is MenuScreenState.Error -> {
-                    Toast.makeText(requireContext(), "Ошибка: ${it.errorMessage}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Ошибка: ${state.errorMessage}", Toast.LENGTH_SHORT).show()
                     binding.pbLoading.visibility = View.GONE
                 }
                 is MenuScreenState.Success -> {
                     binding.pbLoading.visibility = View.GONE
-                    menuAdapter.updateItems(it.items)
+                    // Получаю все данные меню
+                    val menu = state.menu
+                    // Пример: устанавливаем вкладки с разделами
+                    setupTabLayout(binding.tlTabLayout,menu)
+
+                    menuAdapter.updateItems(menu,pizzaItems)
+
 
                 }
             }
@@ -158,29 +162,55 @@ class MenuFragment : Fragment() {
             }
 
         })
-        // Настройка RecyclerView
+        binding.tlTabLayout.selectTab(binding.tlTabLayout.getTabAt(0))
         setupRecyclerView()
 
-        // Выполнение сетевого запроса
-        fetchMenuItems()
 
-        setupCustomTabs(binding.tlTabLayout)
 
-        binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+
+    }
+    private fun setupTabLayout(tabLayout: TabLayout, menu: ListMenu) {
+        val tabs = listOf(
+            TabData("Pizza", R.drawable.icon_menu_1),
+            TabData("Burgers", R.drawable.icon_menu_2),
+            TabData("Wok", R.drawable.icon_menu_3),
+            TabData("Sushi", R.drawable.icon_menu_4)
+        )
+
+        tabs.forEach { tabData ->
+            val tab = tabLayout.newTab()
+            tab.customView = createTabView(tabData)
+            tabLayout.addTab(tab)
+        }
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                when (tab?.position){
-                    0 -> listMenu?.let { menuAdapter.updateItems(it.pizzaItems) }
-                    1 -> listMenu?.let { menuAdapter.updateItems(it.burgersItems) }
-                    2 -> listMenu?.let { menuAdapter.updateItems(it.wokItems) }
-                    3 -> listMenu?.let { menuAdapter.updateItems(it.sushiItems) }
+                when (tab?.position) {
+                    0 -> updateRecyclerView(menu.pizzaItems)
+                    1 -> updateRecyclerView(menu.hamburgersItems)
+                    2 -> updateRecyclerView(menu.wokItems)
+                    3 -> updateRecyclerView(menu.sushiItems)
                 }
             }
+
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-        binding.tlTabLayout.selectTab(binding.tlTabLayout.getTabAt(0))
-
     }
+
+    private fun createTabView(tabData: TabData): View {
+        val tabView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.tab_item, null)
+
+        val tabIcon = tabView.findViewById<ImageView>(R.id.tab_icon)
+        val tabText = tabView.findViewById<TextView>(R.id.tab_text)
+
+        tabIcon.setImageResource(tabData.iconRes)
+        tabText.text = tabData.title
+
+        return tabView
+    }
+
 
     private fun setupRecyclerView() {
         menuAdapter = MenuAdapter(
@@ -212,52 +242,6 @@ class MenuFragment : Fragment() {
         }
     }
 
-    private fun fetchMenuItems() {
-        val url = GET_URL_FROM_BACK
-        val client = OkHttpClient()
-
-        requireActivity().runOnUiThread {
-            binding.pbLoading.visibility = View.VISIBLE
-        }
-
-        thread {
-            try {
-                val request = Request.Builder()
-                    .url(url)
-                    .build()
-
-                client.newCall(request).execute().use { response ->
-                    if (!response.isSuccessful) throw Exception("Ошибка запроса: ${response.code}")
-
-                    val responseBody = response.body?.string() ?: throw Exception("Пустой ответ от сервера")
-                    Log.d("MenuFragment", "Ответ от сервера: $responseBody")
-
-                    // Получаем объект ListMenu из ответа
-                    val listMenu = Gson().fromJson(responseBody, ListMenu::class.java)
-
-                    requireActivity().runOnUiThread {
-                        binding.pbLoading.visibility = View.GONE
-
-                        // Загрузка данных в адаптер для активной вкладки
-                        when (binding.tlTabLayout.selectedTabPosition) {
-                            0 -> menuAdapter.updateItems(listMenu.pizzaItems)
-                            1 -> menuAdapter.updateItems(listMenu.burgersItems)
-                            2 -> menuAdapter.updateItems(listMenu.wokItems)
-                            3 -> menuAdapter.updateItems(listMenu.sushiItems)
-                            else -> throw Exception("Неизвестная вкладка")
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("MenuFragment", "Ошибка загрузки меню: ${e.message}")
-                requireActivity().runOnUiThread {
-                    binding.pbLoading.visibility = View.GONE
-                    Toast.makeText(requireContext(), "Ошибка загрузки данных: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
     private fun replaceFragment(fragment: Fragment){
         requireActivity().supportFragmentManager
             .beginTransaction()
@@ -265,23 +249,6 @@ class MenuFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
-    private fun setupCustomTabs(tabLayout: TabLayout){
-        val tabs = listOf(
-            TabData("Pizza", R.drawable.icon_menu_1),
-            TabData("Burgers", R.drawable.icon_menu_2),
-            TabData("Wok", R.drawable.icon_menu_3),
-            TabData("Sushi", R.drawable.icon_menu_4)
-        )
-        tabs.forEachIndexed{ index, tabData ->
-            val tab = tabLayout.newTab()
-            val tabView = LayoutInflater.from(requireContext()).inflate(R.layout.tab_item,null)
-            tabView.findViewById<ImageView>(R.id.tab_icon).setImageResource(tabData.iconRes)
-            tabView.findViewById<TextView>(R.id.tab_text).text = tabData.title
-            tab.customView = tabView
-            tabLayout.addTab(tab)
-        }
-    }
-
 
     private val runnable = Runnable{
         viewPager2.currentItem = viewPager2.currentItem + 1
@@ -323,6 +290,10 @@ class MenuFragment : Fragment() {
         viewPager2.clipChildren = false
         viewPager2.getChildAt(0).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
     }
+    private fun updateRecyclerView(items: List<Item>) {
+        menuAdapter.updateItems(items)
+    }
+
 
     private fun setUpMenuRecyclerViews() {
         val recommendItemClickListener = object : RecommendMenuAdapter.OnItemClickListener{

@@ -47,7 +47,7 @@ class MenuAdapter(
         return menuItems.size
     }
     fun updateItems(newItems: List<Item>) {
-        menuItems = newItems
+        this.menuItems = newItems
         notifyDataSetChanged()
     }
 }

@@ -44,7 +44,7 @@ class MenuRepositoryImpl : MenuRepository {
                         try {
                             val listMenu = gson.fromJson(responseBody, ListMenu::class.java)
                             // Объединяем все элементы меню в один список
-                            val allItems = listMenu.pizzaItems + listMenu.burgersItems + listMenu.wokItems + listMenu.sushiItems
+                            val allItems = listMenu.pizzaItems + listMenu.hamburgersItems + listMenu.wokItems + listMenu.sushiItems
                             Log.d("MenuService", "Полученные данные: ${allItems.joinToString { it.itemName }}")
                             onResponse(MenuResponse.Success(allItems))
                         } catch (e: Exception) {

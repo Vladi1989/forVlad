@@ -5,6 +5,6 @@ object Constants {
     const val GET_CODE_TAG = "GET_CODE_TAG"
     const val CURRENT_ALL_LIST = "CURRENT_ALL_LIST"
     const val GET_CODE_URL = "https://raw.githubusercontent.com/Vlad21anon/bgResponse/main/get_code2"
-    const val GET_URL_FROM_BACK = "https://github.com/Vlad21anon/bgResponse/blob/main/menuitems"
+    const val GET_URL_FROM_BACK = "https://raw.githubusercontent.com/Vlad21anon/bgResponse/main/menuitems"
 
 }
