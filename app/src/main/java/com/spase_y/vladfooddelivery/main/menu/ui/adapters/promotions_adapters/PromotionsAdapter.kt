@@ -1,46 +1,49 @@
 package com.spase_y.vladfooddelivery.main.menu.ui.adapters.promotions_adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.spase_y.vladfooddelivery.R
+import com.bumptech.glide.Glide
+import com.spase_y.vladfooddelivery.databinding.ImageSliderContainerBinding
+import com.spase_y.vladfooddelivery.main.menu.data.model.PromotionItem
 
 class PromotionsAdapter(
-    private val context: Context,
-    private val imageList: ArrayList<Int>,
-    private val viewPager2: ViewPager2
 ): RecyclerView.Adapter<PromotionsAdapter.ImageViewHolder>() {
-    class ImageViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val image = itemView.findViewById<ImageView>(R.id.ivImageInImage)
+    class ImageViewHolder(val binding: ImageSliderContainerBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(promotionItem: PromotionItem) {
+            Glide.with(itemView.context)
+                .load(promotionItem.item_image)
+                .into(binding.ivImageInImage)
+
+            binding.tvHeader.text = promotionItem.item_header
+            binding.tvText.text = promotionItem.item_description
+
+            if (promotionItem.button_text.isNotEmpty()) {
+                binding.btnOrder.text = promotionItem.button_text
+                binding.btnOrder.visibility = View.VISIBLE
+            } else {
+                binding.btnOrder.visibility = View.GONE
+            }
+        }
     }
+    var promotionList: List<PromotionItem> = emptyList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ImageViewHolder {
-
-        val view = LayoutInflater.from(context).inflate(R.layout.image_slider_container_,parent,false)
-        return ImageViewHolder(view)
+        val binding = ImageSliderContainerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return ImageViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.image.setImageResource(imageList[position])
-
-        if(position == imageList.size - 1){
-            viewPager2.post(runnable)
-        }
+        holder.bind(promotionList[position])
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
+        return promotionList.size
     }
-    private val runnable = Runnable {
-        imageList.addAll(imageList)
-        notifyDataSetChanged()
-    }
+
 }
 

@@ -26,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/ivArrowBack3"
-                android:layout_width="12dp"
-                android:layout_height="19dp"
+                android:layout_width="14dp"
+                android:layout_height="17dp"
                 android:layout_marginStart="34dp"
                 android:background="@drawable/arrow_back"
                 app:layout_constraintBottom_toBottomOf="parent"

@@ -4,7 +4,7 @@ import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
 
 interface MenuScreenState {
     object Loading : MenuScreenState
-    class Success(val menu: List<ListMenu>) : MenuScreenState
+    class Success(val menu: ListMenu) : MenuScreenState
     class Error(val errorMessage: String) : MenuScreenState
 }
 

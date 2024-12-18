@@ -24,7 +24,7 @@ class OrdersRepositoryImpl(
             currentList[index] = updatedItem
         } else {
             // Если элемента нет, добавляем новый.
-            currentList.add(item)
+            currentList.add(item.copy(quantity = 1))
         }
 
         val result = gson.toJson(currentList)

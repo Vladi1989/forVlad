@@ -29,6 +29,13 @@ class OrderAdapter(
                 Glide.with(itemView).load(item.itemImage).into(productImage)
                 productPrice.text = "$${"%.2f".format(item.itemPrice * item.quantity)}"
                 quantityText.text = item.quantity.toString()
+
+                if(item.quantity > 1) {
+                    btnMinusFood.setImageResource(R.drawable.minus_active)
+                } else {
+                    btnMinusFood.setImageResource(R.drawable.minus)
+                }
+
                 btnAddFood.setOnClickListener {
                     onQuantityChanged(item,item.copy(quantity = item.quantity + 1))
                 }
