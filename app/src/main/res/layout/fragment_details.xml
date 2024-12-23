@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/down_background_details"
-    tools:context=".main.menu.ui.presentation.DetailsFragment">
+    tools:context=".main.details.ui.presentation.DetailsFragment">
 
     <ImageView
         android:id="@+id/ivArrowBack7"

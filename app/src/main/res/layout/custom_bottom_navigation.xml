@@ -57,7 +57,8 @@
             android:focusable="true"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/iv_icon_discounts"

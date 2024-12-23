@@ -6,14 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
-import com.github.captain_miao.optroundcardview.OptRoundCardView
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.databinding.FragmentMainAppBinding
 import com.spase_y.vladfooddelivery.main.account.AccountFragment

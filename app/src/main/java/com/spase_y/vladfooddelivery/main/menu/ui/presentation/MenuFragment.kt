@@ -23,11 +23,12 @@ import com.spase_y.vladfooddelivery.main.menu.data.model.ListMenu
 import com.spase_y.vladfooddelivery.R
 import com.spase_y.vladfooddelivery.core.toPx
 import com.spase_y.vladfooddelivery.databinding.FragmentMenuBinding
+import com.spase_y.vladfooddelivery.main.details.ui.presentation.DetailsFragment
 import com.spase_y.vladfooddelivery.main.menu.data.model.PromotionItem
 import com.spase_y.vladfooddelivery.main.menu.data.model.TabData
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.promotions_adapters.PromotionsAdapter
 import com.spase_y.vladfooddelivery.main.menu.ui.adapters.menu_adapters.MenuAdapter
-import com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter.HorizontalSpaceItemDecoration
+import com.spase_y.vladfooddelivery.main.menu.ui.adapters.horizontal_spaceItem_decoration.HorizontalSpaceItemDecoration
 import com.spase_y.vladfooddelivery.main.menu.ui.model.MenuScreenState
 import com.spase_y.vladfooddelivery.main.menu.ui.view_model.MenuViewModel
 import com.spase_y.vladfooddelivery.main.order.order_main.ui.model.OrderScreenState
@@ -45,7 +46,6 @@ class MenuFragment : Fragment() {
     private lateinit var adapter: PromotionsAdapter
     private lateinit var handlerImageSlider: Handler
     private lateinit var menuAdapter: MenuAdapter
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

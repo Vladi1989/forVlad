@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.spase_y.vladfooddelivery.loading.get_code.di.getCodeModule
 import com.spase_y.vladfooddelivery.main.add_card.add_card.di.cardModule
+import com.spase_y.vladfooddelivery.main.details.di.detailsModule
 import com.spase_y.vladfooddelivery.main.menu.di.menuModule
 import com.spase_y.vladfooddelivery.main.order.order_main.di.ordersModule
 import com.spase_y.vladfooddelivery.root.di.loginUserModule
@@ -28,7 +29,8 @@ class App : Application() {
                 loginUserModule,
                 themeModule,
                 cardModule,
-                menuModule
+                menuModule,
+                detailsModule
 
 
             )

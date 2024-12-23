@@ -1,4 +1,4 @@
-package com.spase_y.vladfooddelivery.main.menu.ui.adapters.recommend_menu_adapter
+package com.spase_y.vladfooddelivery.main.menu.ui.adapters.horizontal_spaceItem_decoration
 
 import android.graphics.Rect
 import android.view.View
@@ -14,14 +14,10 @@ class HorizontalSpaceItemDecoration(private val spaceWidth: Float) : RecyclerVie
         val position = parent.getChildAdapterPosition(view)
 
         if (position == 0) {
-            // Устанавливаем отрицательный отступ для первого элемента
             outRect.left = -spaceWidth.toInt()
         } else {
-            // Для остальных элементов добавляем стандартный отступ
             outRect.left = spaceWidth.toInt()
         }
-
-        // Если нужно, можно задать отступы сверху, снизу или справа
         outRect.top = 0
         outRect.bottom = 0
         outRect.right = 0

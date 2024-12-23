@@ -14,7 +14,10 @@ import com.spase_y.vladfooddelivery.root.Constants.MAX_COUNT_ITEMS_TO_ORDER
 class MenuViewModel(
     private val ordersInteractor: OrdersInteractor,
     private val menuInteractor: MenuInteractor
+
 ) : ViewModel() {
+    private val _recommendedItems = MutableLiveData<List<Item>>()
+    val recommendedItems: LiveData<List<Item>> get() = _recommendedItems
 
     private val _menuLd = MutableLiveData<MenuScreenState>()
     val menuLd: LiveData<MenuScreenState> = _menuLd
@@ -52,7 +55,10 @@ class MenuViewModel(
             _orderLd.postValue(OrderScreenState.Success(updatedOrderList))
         }
     }
-
+    fun fetchRecommendedItems(recommendedIds: List<String>, allMenuItems: List<Item>) {
+        val recommended = allMenuItems.filter { recommendedIds.contains(it.itemId) }
+        _recommendedItems.value = recommended
+    }
 }
 
 
